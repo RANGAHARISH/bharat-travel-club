@@ -1,8 +1,6 @@
 import Link from "next/link";
-import { MapPin, Clock, Star } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { formatPrice, getImageUrl } from "@/lib/utils";
+import { MapPin } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
 import type { Trip } from "@/types";
 
 interface TripCardProps {
@@ -10,76 +8,58 @@ interface TripCardProps {
 }
 
 export function TripCard({ trip }: TripCardProps) {
-  const hasDiscount = trip.discounted_price && trip.discounted_price < trip.price;
-  const categoryName = trip.category?.name || "";
+  const hasDiscount = trip.discounted_price && trip.discounted_price > trip.price;
+  const emojis = ["🌊", "🏔️", "🌄", "🌲", "🏛️", "🌴", "🌿", "☕", "⛺", "🏜️", "🌙"];
+  const emoji = emojis[trip.title.length % emojis.length];
 
   return (
     <Link href={`/trips/${trip.slug}`} className="group block">
-      <Card className="h-full overflow-hidden group-hover:shadow-md transition-all duration-200 group-hover:-translate-y-1">
+      <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all group-hover:-translate-y-0.5">
         {/* Image */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-brand-cream">
-          {trip.cover_image_url ? (
-            <img
-              src={getImageUrl(trip.cover_image_url)}
-              alt={trip.title}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center text-4xl">
-              🏕️
-            </div>
+        <div className="relative aspect-[4/3] bg-gradient-to-br from-brand-red/10 to-blue-100">
+          <div className="flex items-center justify-center h-full text-5xl opacity-60">{emoji}</div>
+          {trip.is_featured && (
+            <span className="absolute top-2 left-2 bg-amber-500 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">
+              Featured
+            </span>
           )}
-          {/* Category badge */}
-          <Badge variant="accent" className="absolute left-3 top-3">
-            {categoryName || trip.departure_city}
-          </Badge>
-          {/* Duration */}
-          <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/60 px-3 py-1 text-xs text-white backdrop-blur-sm">
-            <Clock className="h-3 w-3" />
+          <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
             {trip.duration_days}D/{trip.duration_nights}N
-          </div>
+          </span>
         </div>
-
-        <CardContent className="p-4 space-y-2">
-          <h3 className="font-serif text-lg font-semibold leading-snug text-brand-ink group-hover:text-brand-teal transition-colors line-clamp-2">
+        {/* Body */}
+        <div className="p-4 space-y-2">
+          <h3 className="font-semibold text-gray-900 leading-snug group-hover:text-brand-red transition-colors line-clamp-2 text-sm">
             {trip.title}
           </h3>
-
-          <div className="flex items-center gap-1 text-sm text-brand-ink/60">
-            <MapPin className="h-3.5 w-3.5" />
-            {trip.location}
-          </div>
-
-          <div className="flex items-center justify-between pt-2">
-            <div className="space-y-0.5">
-              <span className="text-xl font-bold text-brand-ink">
-                {formatPrice(hasDiscount ? trip.discounted_price! : trip.price)}
-              </span>
-              {hasDiscount && (
-                <span className="ml-2 text-sm text-brand-ink/40 line-through">
-                  {formatPrice(trip.price)}
-                </span>
-              )}
-            </div>
-            <span className="text-sm font-medium text-brand-saffron group-hover:underline">
-              Explore →
+          <p className="flex items-center gap-1 text-xs text-gray-500">
+            <MapPin className="h-3 w-3" /> {trip.location}
+          </p>
+          <div className="flex items-center gap-2 pt-1">
+            <span className="text-lg font-bold text-gray-900">
+              {formatPrice(hasDiscount ? trip.discounted_price! : trip.price)}
             </span>
+            {hasDiscount && (
+              <span className="text-sm text-gray-400 line-through">{formatPrice(trip.price)}</span>
+            )}
           </div>
-        </CardContent>
-      </Card>
+          <span className="inline-block text-sm font-medium text-brand-red group-hover:underline">
+            Explore →
+          </span>
+        </div>
+      </div>
     </Link>
   );
 }
 
 export function TripCardSkeleton() {
   return (
-    <div className="rounded-xl border border-brand-teal/10 overflow-hidden animate-pulse">
-      <div className="aspect-[4/3] bg-brand-teal/5" />
+    <div className="bg-white rounded-lg border border-gray-100 overflow-hidden animate-pulse">
+      <div className="aspect-[4/3] bg-gray-100" />
       <div className="p-4 space-y-3">
-        <div className="h-5 bg-brand-teal/10 rounded w-3/4" />
-        <div className="h-4 bg-brand-teal/5 rounded w-1/2" />
-        <div className="h-6 bg-brand-teal/10 rounded w-1/3" />
+        <div className="h-4 bg-gray-100 rounded w-3/4" />
+        <div className="h-3 bg-gray-100 rounded w-1/2" />
+        <div className="h-5 bg-gray-100 rounded w-1/3" />
       </div>
     </div>
   );

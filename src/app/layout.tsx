@@ -19,14 +19,14 @@ const sans = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Bharat Travel Club — Beach · Trek · Camp",
-    template: "%s | Bharat Travel Club",
+    default: "Bharath Travel Club — Weekend Trips | Budget Group Tours",
+    template: "%s | Bharath Travel Club",
   },
-  description: "Curated group travel experiences across India. Weekend trips, treks, and camping adventures from Hyderabad and Bangalore.",
+  description: "Weekend trips, treks, camping, couple packages from Hyderabad and Bangalore. Budget-friendly group travel with guaranteed departures every week.",
   openGraph: {
-    title: "Bharat Travel Club",
-    description: "Beach · Trek · Camp — Curated group travel across India",
-    siteName: "Bharat Travel Club",
+    title: "Bharath Travel Club",
+    description: "Weekend Trips • Monsoon Treks • Budget Group Tours",
+    siteName: "Bharath Travel Club",
     type: "website",
     locale: "en_IN",
   },

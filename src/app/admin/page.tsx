@@ -12,8 +12,8 @@ async function getStats() {
     const data = bookingsRes.data || [];
     return {
       total: data.length,
-      confirmed: data.filter(b => b.booking_status === "confirmed").length,
-      revenue: data.reduce((s, b) => s + (b.total_amount || 0), 0),
+      confirmed: data.filter((b: any) => b.booking_status === "confirmed").length,
+      revenue: data.reduce((s: number, b: any) => s + (b.total_amount || 0), 0),
       users: usersRes.count || 0,
     };
   } catch { return { total: 0, confirmed: 0, revenue: 0, users: 0 }; }

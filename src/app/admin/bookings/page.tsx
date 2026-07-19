@@ -2,7 +2,7 @@ import { createServer } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
 import { formatPrice, formatDate } from "@/lib/utils";
 
-const statusColors: Record<string, "default" | "accent" | "coral" | "outline"> = { confirmed: "accent", pending: "default", cancelled: "coral", completed: "outline" };
+const statusColors: Record<string, "default" | "accent" | "gold" | "outline"> = { confirmed: "accent", pending: "default", cancelled: "gold", completed: "outline" };
 
 async function getBookings() {
   try {

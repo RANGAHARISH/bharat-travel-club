@@ -1,167 +1,357 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MapPin, Clock, Check, X as XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { createServer } from "@/lib/supabase/server";
-import { formatPrice, formatDate } from "@/lib/utils";
-import { ReviewCard } from "@/components/features/review-card";
-import { TripCard } from "@/components/features/trip-card";
-import type { Trip, Review } from "@/types";
 import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  try {
-    const { slug } = await params;
-    const supabase = await createServer();
-    if (!supabase) return { title: "Trip" };
-    const { data: trip } = await supabase.from("trips").select("title, description").eq("slug", slug).single();
-    if (!trip) return { title: "Trip Not Found" };
-    return { title: trip.title, description: trip.description?.slice(0, 160) };
-  } catch { return { title: "Trip" }; }
-}
-
-async function getTripData(slug: string) {
-  try {
-    const supabase = await createServer();
-    if (!supabase) return { trip: null, reviews: [], related: [] };
-    const { data: trip } = await supabase
-      .from("trips")
-      .select("*, category:categories(*), batches:trip_batches(*)")
-      .eq("slug", slug)
-      .eq("status", "published")
-      .single();
-    if (!trip) return { trip: null, reviews: [], related: [] };
-    const typedTrip = trip as unknown as Trip;
-    const [reviewsRes, relatedRes] = await Promise.all([
-      supabase.from("reviews").select("*, profile:profiles(full_name, avatar_url)").eq("trip_id", trip.id).eq("is_approved", true).order("created_at", { ascending: false }).limit(10),
-      supabase.from("trips").select("*, category:categories(*)").eq("status", "published").neq("id", trip.id).limit(3),
-    ]);
-    return {
-      trip: typedTrip,
-      reviews: (reviewsRes.data || []) as Review[],
-      related: (relatedRes.data || []) as unknown as Trip[],
-    };
-  } catch {
-    return { trip: null, reviews: [], related: [] };
+// ===== TRIP DETAILS DATABASE (fallback when Supabase not connected) =====
+const tripDetails: Record<string, {
+  title: string;
+  tagline: string;
+  price: number;
+  origPrice: number;
+  duration: string;
+  location: string;
+  contact: string;
+  image: string;
+  description: string;
+  itinerary: { day: string; title: string; details: string[] }[];
+  inclusions: string[];
+  exclusions: string[];
+  notes: string[];
+  cancelPolicy: string[];
+  highlights: string[];
+}> = {
+  "gokarna-weekend-group-tour": {
+    title: "Gokarna Weekend Group Tour",
+    tagline: "🌊 GOKARNA • MURUDESHWAR • DANDELI TRIP 🌊",
+    price: 4999,
+    origPrice: 6500,
+    duration: "2 Nights | 3 Days",
+    location: "Gokarna, Karnataka",
+    contact: "7396952195",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=600&fit=crop",
+    description: "Join us for an unforgettable weekend exploring the coastal gems of Karnataka — Gokarna, Murudeshwar, and Dandeli. This budget-friendly group trip includes train tickets, water activities, and memories that last a lifetime.",
+    highlights: ["🌊 Gokarna • Murudeshwar • Dandeli", "🚆 Train Tickets Included", "🛶 Kayaking, Coracle & Zipline", "🏖️ Om Beach & 4 Beaches Trek"],
+    itinerary: [
+      {
+        day: "Day 0",
+        title: "Departure",
+        details: [
+          "🚆 Start your journey from your city to Hubli",
+          "Train tickets provided"
+        ]
+      },
+      {
+        day: "Day 1",
+        title: "Dandeli Adventure",
+        details: [
+          "☀️ Morning:",
+          "  • Reach Hubli Railway Station",
+          "  • Pickup and transfer to Dandeli Resort",
+          "  • Check-in & freshen up",
+          "  • Finish breakfast",
+          "",
+          "🌊 Water Activities:",
+          "  • Kayaking",
+          "  • Coracle Ride",
+          "  • Zipline",
+          "",
+          "⏳ If time permits:",
+          "  • Crocodile Park",
+          "  • Elephant Camp",
+          "  • Eco Park",
+          "",
+          "🌙 Evening at Dandeli Resort:",
+          "  • Music & Campfire",
+          "  • Rain Dance",
+          "  • Swimming Pool",
+          "  • Indoor Games",
+          "",
+          "🍽️ Dinner & overnight stay"
+        ]
+      },
+      {
+        day: "Day 2",
+        title: "Coastal Explorer",
+        details: [
+          "Wake up early and proceed to:",
+          "",
+          "  • Mirjan Fort",
+          "  • Apsarakonda Waterfalls",
+          "  • Mangrove Boardwalk",
+          "  • Murudeshwar Temple & Beach",
+          "",
+          "🏠 Check-in to stay & overnight rest"
+        ]
+      },
+      {
+        day: "Day 3",
+        title: "Gokarna Exploration",
+        details: [
+          "☀️ Morning Visit:",
+          "  • Mahabaleshwar Temple",
+          "  • Gokarna Main Beach",
+          "  • Om Beach",
+          "",
+          "OR",
+          "",
+          "🥾 4 Beaches Trek:",
+          "  • Belekan Beach",
+          "  • Paradise Beach",
+          "  • Half Moon Beach",
+          "  • Om Beach",
+          "",
+          "🍽️ Finish lunch and proceed to Hubli Railway Station"
+        ]
+      }
+    ],
+    inclusions: [
+      "🚆 Train Tickets (Both Sides)",
+      "🚐 3 Days Local Transport",
+      "🏠 2 Nights Accommodation",
+      "🍳 1 Day Food (Dandeli Resort)",
+      "🛶 3 Water Activities (Kayaking, Coracle Ride & Zipline)",
+      "👨‍✈️ Trip Organizer",
+      "🛣️ Toll & Driver Allowance"
+    ],
+    exclusions: [
+      "🍽️ Food for 2 Days",
+      "❌ Anything not mentioned in inclusions",
+      "💰 Extra charges for AC Train Tickets",
+      "💑 Couple Room Charges"
+    ],
+    notes: [
+      "Water activities are managed by Dandeli Forest Authorities. If activities are closed due to forest decisions, Bharat Travel Club is not responsible; however, we will try our best to arrange alternatives.",
+      "Advance payment is non-refundable.",
+      "Carry a valid ID proof and a copy of train tickets.",
+      "Extra charges applicable for Tatkal & Premium Tatkal train bookings.",
+      "This is a budget-friendly trip and not a luxury package. We strive to make your journey comfortable and memorable within budget.",
+      "Trip management reserves the right to modify routes, activities, timings, duration, or participant allocation depending on weather and operational conditions.",
+      "In case of vehicle breakdowns, traffic issues, or weather conditions, some places may be skipped.",
+      "Charges are collected for the services provided (travel, stay, arrangements, and coordination), not for specific sightseeing points."
+    ],
+    cancelPolicy: [
+      "Cancellation within 2 days prior to trip → Full amount payable",
+      "Cancellation within 1 week prior → 50% of trip cost payable"
+    ]
+  },
+  "gokarna-dandeli-2n-3d-couple-package": {
+    title: "Gokarna Dandeli 2N/3D Couple Package",
+    tagline: "💕 GOKARNA • DANDELI COUPLE GETAWAY",
+    price: 37000,
+    origPrice: 40000,
+    duration: "2 Nights | 3 Days",
+    location: "Gokarna & Dandeli, Karnataka",
+    contact: "7396952195",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=600&fit=crop",
+    description: "A romantic getaway for couples exploring the best of Karnataka's coast and forests.",
+    highlights: ["💕 Couple Friendly", "🏖️ Gokarna Beaches", "🌲 Dandeli Resort", "🛶 Water Activities"],
+    itinerary: [
+      { day: "Day 1", title: "Arrival & Dandeli", details: ["Check-in at Dandeli Resort", "Evening campfire & dinner"] },
+      { day: "Day 2", title: "Coastal Tour", details: ["Visit Murudeshwar Temple", "Gokarna Beach walk", "Overnight stay"] },
+      { day: "Day 3", title: "Departure", details: ["Morning beach trek", "Check-out & return"] }
+    ],
+    inclusions: ["🏠 2 Nights Accommodation", "🚐 Local Transport", "🍳 Breakfast", "👨‍✈️ Trip Organizer"],
+    exclusions: ["🍽️ Lunch & Dinner", "💰 Extra charges"],
+    notes: ["Advance payment is non-refundable.", "Carry valid ID proof."],
+    cancelPolicy: ["Cancellation within 2 days → Full amount", "Cancellation within 1 week → 50%"]
   }
+};
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const trip = tripDetails[slug];
+  if (!trip) return { title: "Trip Not Found" };
+  return { title: trip.title, description: trip.description };
 }
 
 export default async function TripDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const { trip: typedTrip, reviews: typedReviews, related } = await getTripData(slug);
-  if (!typedTrip) notFound();
+  const trip = tripDetails[slug];
+  if (!trip) notFound();
 
-  const hasDiscount = typedTrip.discounted_price && typedTrip.discounted_price < typedTrip.price;
-  const activeBatches = (typedTrip.batches || []).filter((b: any) => b.status === "active");
+  const hasDiscount = trip.origPrice > trip.price;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-      <nav className="flex items-center gap-2 text-sm text-brand-ink/50 mb-6">
-        <Link href="/" className="hover:text-brand-teal">Home</Link>
-        <span>/</span>
-        <Link href="/trips" className="hover:text-brand-teal">Trips</Link>
-        <span>/</span>
-        <span className="text-brand-ink/80">{typedTrip.title}</span>
-      </nav>
+    <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#f8f5f2", color: "#1a1a1a", lineHeight: 1.6 }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .detail-grid { grid-template-columns: 1fr !important; }
+          .itinerary-details { padding-left: 0 !important; }
+        }
+      `}</style>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
-          <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-brand-cream">
-            {typedTrip.cover_image_url ? (
-              <img src={typedTrip.cover_image_url} alt={typedTrip.title} className="h-full w-full object-cover" />
-            ) : (
-              <div className="flex h-full items-center justify-center text-6xl">🏕️</div>
-            )}
-            <Badge variant="accent" className="absolute left-4 top-4 text-sm">
-              {typedTrip.category?.name || typedTrip.departure_city}
-            </Badge>
-          </div>
-
-          <h1 className="font-serif text-3xl lg:text-4xl font-bold text-brand-ink">{typedTrip.title}</h1>
-
-          <div className="flex flex-wrap items-center gap-4 text-sm text-brand-ink/60">
-            <span className="flex items-center gap-1"><MapPin className="h-4 w-4" /> {typedTrip.location}</span>
-            <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> {typedTrip.duration_days}D / {typedTrip.duration_nights}N</span>
-            <span>From {typedTrip.departure_city}</span>
-          </div>
-
-          <Tabs defaultValue="overview">
-            <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
-              <TabsTrigger value="inclusions">Inclusions</TabsTrigger>
-              <TabsTrigger value="reviews">Reviews ({typedReviews.length})</TabsTrigger>
-            </TabsList>
-            <TabsContent value="overview" className="space-y-4">
-              <p className="text-brand-ink/80 leading-relaxed whitespace-pre-line">{typedTrip.description}</p>
-            </TabsContent>
-            <TabsContent value="itinerary" className="space-y-4">
-              {typedTrip.itinerary?.length > 0 ? typedTrip.itinerary.map((day: any) => (
-                <div key={day.day} className="rounded-lg border border-brand-teal/10 p-4">
-                  <h3 className="font-semibold text-brand-teal">Day {day.day}: {day.title}</h3>
-                  <p className="text-sm text-brand-ink/70 mt-1">{day.description}</p>
-                </div>
-              )) : <p className="text-brand-ink/60">Itinerary details coming soon.</p>}
-            </TabsContent>
-            <TabsContent value="inclusions">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-brand-ink">Inclusions</h3>
-                  {typedTrip.inclusions?.map((item: string, i: number) => (
-                    <p key={i} className="flex items-start gap-2 text-sm text-brand-ink/70"><Check className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" /> {item}</p>
-                  ))}
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-brand-ink">Exclusions</h3>
-                  {typedTrip.exclusions?.map((item: string, i: number) => (
-                    <p key={i} className="flex items-start gap-2 text-sm text-brand-ink/70"><XIcon className="h-4 w-4 text-brand-coral mt-0.5 flex-shrink-0" /> {item}</p>
-                  ))}
-                </div>
-              </div>
-            </TabsContent>
-            <TabsContent value="reviews" className="space-y-4">
-              {typedReviews.length > 0 ? typedReviews.map((review) => <ReviewCard key={review.id} review={review} />) : <p className="text-brand-ink/60">No reviews yet. Be the first!</p>}
-            </TabsContent>
-          </Tabs>
+      {/* Breadcrumb */}
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 20px 0" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#888", marginBottom: 20 }}>
+          <Link href="/" style={{ color: "#888", textDecoration: "none" }}>Home</Link>
+          <span>›</span>
+          <Link href="/trips" style={{ color: "#888", textDecoration: "none" }}>Trips</Link>
+          <span>›</span>
+          <span style={{ color: "#333" }}>{trip.title}</span>
         </div>
+      </div>
 
-        <div className="lg:col-span-1">
-          <div className="sticky top-24 rounded-xl border border-brand-teal/10 bg-white p-6 shadow-sm space-y-5">
-            <div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-brand-ink">{formatPrice(hasDiscount ? typedTrip.discounted_price! : typedTrip.price)}</span>
-                {hasDiscount && <span className="text-lg text-brand-ink/40 line-through">{formatPrice(typedTrip.price)}</span>}
-              </div>
-              <p className="text-sm text-brand-ink/60">per person</p>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-brand-ink/80">Select Departure Date</label>
-              {activeBatches.length > 0 ? activeBatches.map((batch: any) => (
-                <label key={batch.id} className="flex items-center gap-3 rounded-lg border border-brand-teal/20 p-3 cursor-pointer hover:border-brand-teal transition-colors has-checked:border-brand-teal has-checked:bg-brand-teal/5">
-                  <input type="radio" name="batch" value={batch.id} className="accent-brand-teal" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">{formatDate(batch.departure_date)}</p>
-                    <p className="text-xs text-brand-ink/50">{batch.total_seats - batch.seats_booked} seats left</p>
-                  </div>
-                </label>
-              )) : <p className="text-sm text-brand-ink/50">No upcoming dates available</p>}
-            </div>
-            <Link href={`/booking/${typedTrip.id}`}><Button className="w-full" size="lg" variant="accent">Book Now</Button></Link>
-            <p className="text-xs text-center text-brand-ink/50">Secure your spot with 25% advance</p>
+      {/* Hero image */}
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
+        <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", aspectRatio: "21/9", marginBottom: 30 }}>
+          <img src={trip.image} alt={trip.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }} />
+          <div style={{ position: "absolute", bottom: 24, left: 24, color: "#fff" }}>
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 700, margin: 0 }}>{trip.title}</h1>
+            <p style={{ margin: "6px 0 0", fontSize: 14, opacity: 0.85 }}>{trip.tagline}</p>
           </div>
         </div>
       </div>
 
-      {related && related.length > 0 && (
-        <section className="mt-16">
-          <h2 className="font-serif text-2xl font-bold text-brand-ink mb-6">You Might Also Like</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {related.map((t: Trip) => <TripCard key={t.id} trip={t} />)}
+      <div className="detail-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 30, maxWidth: 1200, margin: "0 auto", padding: "0 20px 60px" }}>
+
+        {/* ===== LEFT COLUMN ===== */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+
+          {/* Quick Info Bar */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 16, background: "#fff", borderRadius: 12, padding: 20, border: "1px solid #e5e0db" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
+              <span style={{ fontSize: 18 }}>📅</span> <strong>{trip.duration}</strong>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
+              <span style={{ fontSize: 18 }}>📍</span> {trip.location}
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
+              <span style={{ fontSize: 18 }}>📞</span> {trip.contact}
+            </div>
           </div>
-        </section>
-      )}
+
+          {/* Highlights */}
+          <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 700, margin: "0 0 12px" }}>✨ Trip Highlights</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              {trip.highlights.map((h, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, color: "#555" }}>
+                  <span style={{ color: "#33abcb", fontSize: 16 }}>✓</span> {h}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Full Itinerary */}
+          <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 700, margin: "0 0 16px" }}>📋 Detailed Itinerary</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {trip.itinerary.map((day, i) => (
+                <div key={i} style={{ borderLeft: "3px solid #33abcb", paddingLeft: 16 }}>
+                  <h3 style={{ fontSize: 16, fontWeight: 700, color: "#33abcb", margin: "0 0 4px", display: "flex", alignItems: "center", gap: 8 }}>
+                    <span style={{ background: "#33abcb", color: "#fff", width: 28, height: 28, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>{i + 1}</span>
+                    {day.day} – {day.title}
+                  </h3>
+                  <div className="itinerary-details" style={{ paddingLeft: 36 }}>
+                    {day.details.map((line, j) => (
+                      line === "" ? <br key={j} /> :
+                      <p key={j} style={{ margin: "2px 0", fontSize: 13.5, color: line.startsWith("  •") || line.startsWith("  –") ? "#666" : "#444", whiteSpace: "pre-wrap", paddingLeft: line.startsWith("  ") ? 12 : 0 }}>
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Inclusions & Exclusions */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#16a34a" }}>✅ Inclusions</h2>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+                {trip.inclusions.map((item, i) => (
+                  <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><span style={{ color: "#16a34a", flexShrink: 0 }}>✓</span> {item}</li>
+                ))}
+              </ul>
+            </div>
+            <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#dc2626" }}>❌ Exclusions</h2>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+                {trip.exclusions.map((item, i) => (
+                  <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><span style={{ color: "#dc2626", flexShrink: 0 }}>✕</span> {item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Important Notes */}
+          <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#e4a33c" }}>⚠️ Important Notes</h2>
+            <ol style={{ paddingLeft: 20, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+              {trip.notes.map((note, i) => (
+                <li key={i} style={{ fontSize: 13, color: "#555", lineHeight: 1.5 }}>{note}</li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Cancellation Policy */}
+          <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#dc2626" }}>📋 Cancellation Policy</h2>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+              {trip.cancelPolicy.map((policy, i) => (
+                <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><span style={{ color: "#dc2626" }}>•</span> {policy}</li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+
+        {/* ===== RIGHT COLUMN — Booking Widget ===== */}
+        <div>
+          <div style={{ position: "sticky", top: 92, display: "flex", flexDirection: "column", gap: 16 }}>
+            {/* Price Card */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: 28, border: "1px solid #e5e0db", boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+                <span style={{ fontSize: 32, fontWeight: 800, color: "#1a1a1a" }}>₹{trip.price.toLocaleString("en-IN")}</span>
+                {hasDiscount && (
+                  <span style={{ fontSize: 16, color: "#bbb", textDecoration: "line-through" }}>₹{trip.origPrice.toLocaleString("en-IN")}</span>
+                )}
+              </div>
+              <p style={{ fontSize: 13, color: "#888", margin: "4px 0 0" }}>per person</p>
+
+              <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#555" }}>
+                  <span style={{ fontSize: 16 }}>📅</span> <strong>{trip.duration}</strong>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#555" }}>
+                  <span style={{ fontSize: 16 }}>📍</span> {trip.location}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#555" }}>
+                  <span style={{ fontSize: 16 }}>📞</span> {trip.contact}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#555" }}>
+                  <span style={{ fontSize: 16 }}>👥</span> Group Departure
+                </div>
+              </div>
+
+              <Link href={`/booking/gokarna`} style={{ display: "block", marginTop: 24 }}>
+                <Button className="w-full" size="lg" style={{ width: "100%", background: "#e4a33c", color: "#000", border: "none", padding: "14px 24px", fontSize: 16, fontWeight: 700, borderRadius: 12, cursor: "pointer" }}>
+                  🚀 Book Now – ₹{trip.price.toLocaleString("en-IN")}
+                </Button>
+              </Link>
+              <p style={{ fontSize: 12, color: "#aaa", textAlign: "center", marginTop: 10 }}>Secure your spot with 25% advance</p>
+            </div>
+
+            {/* Organized by */}
+            <div style={{ background: "#fff", borderRadius: 12, padding: 20, border: "1px solid #e5e0db", textAlign: "center" }}>
+              <p style={{ fontSize: 13, color: "#888", margin: 0 }}>Organized by</p>
+              <p style={{ fontSize: 16, fontWeight: 700, color: "#33abcb", margin: "4px 0" }}>Bharath Travel Club</p>
+              <p style={{ fontSize: 12, color: "#aaa", margin: 0 }}>📞 {trip.contact}</p>
+            </div>
+
+            {/* Share */}
+            <div style={{ background: "#fff", borderRadius: 12, padding: 16, border: "1px solid #e5e0db", display: "flex", justifyContent: "center", gap: 12 }}>
+              <span style={{ fontSize: 13, color: "#888" }}>Share:</span>
+              {["📱", "💬", "📧", "🔗"].map((s, i) => (
+                <span key={i} style={{ cursor: "pointer", fontSize: 18 }}>{s}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

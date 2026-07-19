@@ -4,16 +4,16 @@ import { cn } from "@/lib/utils";
 
 const variants = {
   default: "bg-brand-teal text-white hover:bg-brand-teal-dark shadow-xs",
-  accent: "bg-brand-saffron text-white hover:bg-brand-saffron-dark shadow-xs",
+  accent: "bg-brand-gold text-white hover:bg-brand-gold-dark shadow-xs",
   outline: "border-2 border-brand-teal text-brand-teal hover:bg-brand-teal hover:text-white",
-  ghost: "text-brand-ink hover:bg-brand-teal/10",
+  ghost: "text-gray-700 hover:bg-brand-teal/5",
   link: "text-brand-teal underline-offset-4 hover:underline",
 };
 
 const sizes = {
   sm: "h-9 px-3 text-sm rounded-md",
   md: "h-11 px-5 text-base rounded-lg",
-  lg: "h-13 px-8 text-lg rounded-lg",
+  lg: "h-12 px-6 text-base rounded-lg",
   xl: "h-14 px-10 text-lg rounded-xl",
 };
 
@@ -31,7 +31,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-saffron disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
+          "inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
           variants[variant],
           sizes[size],
           className

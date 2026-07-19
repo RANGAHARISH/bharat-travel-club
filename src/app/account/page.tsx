@@ -12,10 +12,10 @@ import { createClient } from "@/lib/supabase/client";
 import { formatPrice, formatDate } from "@/lib/utils";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
-const statusColors: Record<string, "default" | "accent" | "coral" | "outline"> = {
+const statusColors: Record<string, "default" | "accent" | "gold" | "outline"> = {
   confirmed: "accent",
   pending: "default",
-  cancelled: "coral",
+  cancelled: "gold",
   completed: "outline",
 };
 
