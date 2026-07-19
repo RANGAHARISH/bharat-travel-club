@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette */
+  --color-brand-teal: #0E6E6B;
+  --color-brand-teal-dark: #0A5552;
+  --color-brand-teal-light: #1A8C89;
+  --color-brand-saffron: #E8A23D;
+  --color-brand-saffron-dark: #D48C2A;
+  --color-brand-saffron-light: #F0B855;
+  --color-brand-cream: #F3E6C8;
+  --color-brand-cream-light: #FAF7F1;
+  --color-brand-ink: #1B2A28;
+  --color-brand-coral: #D4735E;
+
+  /* Semantic aliases */
+  --color-primary: var(--color-brand-teal);
+  --color-primary-dark: var(--color-brand-teal-dark);
+  --color-accent: var(--color-brand-saffron);
+  --color-accent-dark: var(--color-brand-saffron-dark);
+  --color-bg: var(--color-brand-cream-light);
+  --color-bg-secondary: var(--color-brand-cream);
+  --color-text: var(--color-brand-ink);
+
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 4rem;
+
+  /* Spacing */
+  --spacing-base: 0.5rem;
+
+  /* Radii */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-full: 9999px;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-cream-light text-brand-ink antialiased;
+  }
+
+  ::selection {
+    @apply bg-brand-saffron/30 text-brand-ink;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-saffron;
+  }
+}
+
+@layer utilities {
+  .stamp-ring {
+    @apply border-2 border-dashed border-brand-teal/30 rounded-full;
+  }
+
+  .stamp-ring-solid {
+    @apply border-2 border-brand-teal/20 rounded-full;
+  }
+
+  .gradient-saffron {
+    @apply bg-linear-to-r from-brand-saffron to-brand-saffron-light;
+  }
+
+  .gradient-teal {
+    @apply bg-linear-to-r from-brand-teal to-brand-teal-light;
+  }
+
+  .text-gradient-saffron {
+    @apply bg-linear-to-r from-brand-saffron to-brand-saffron-dark bg-clip-text text-transparent;
+  }
+}
