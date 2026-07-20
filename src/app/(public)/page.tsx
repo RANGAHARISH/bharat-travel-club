@@ -110,25 +110,27 @@ export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#fff", color: "#1a1a1a", lineHeight: 1.6 }}>
+    <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#fff", color: "#1a1a1a", lineHeight: 1.6, overflowX: "hidden" }}>
       {/* ======== INLINE STYLES ======== */}
       <style>{`
-        @media (max-width: 768px) {
-          .nav-links { display: none; }
-          .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e5e0db; padding: 16px; gap: 12px; }
-          .hamburger { display: block !important; }
-          .product-grid { grid-template-columns: 1fr !important; }
-          .dual-grid { grid-template-columns: 1fr !important; }
-          .footer-grid { grid-template-columns: 1fr !important; }
-          .features-grid { grid-template-columns: 1fr !important; gap: 20px; }
+        /* Mobile/small-tablet specific overrides for inline components */
+        @media (max-width: 640px) {
+          .hero-section { min-height: 90dvh !important; }
+          .section-pad { padding: 40px 0 !important; }
+          .hero-headline br { display: none; }
+          .quick-info-wrap { flex-direction: column !important; gap: 8px !important; }
         }
-        @media (min-width: 769px) and (max-width: 1024px) {
-          .product-grid { grid-template-columns: 1fr 1fr !important; }
+        @media (min-width: 641px) and (max-width: 1024px) {
+          .hero-section { min-height: 80vh !important; }
+        }
+        @media (max-width: 480px) {
+          .hero-headline { font-size: 1.65rem !important; }
+          .hero-subtitle { font-size: 0.85rem !important; }
         }
       `}</style>
 
       {/* ======== HERO ======== */}
-      <section style={{ position: "relative", minHeight: "85vh", display: "flex", alignItems: "center", justifyContent: "center", paddingTop: 72, overflow: "hidden" }}>
+      <section className="hero-section" style={{ position: "relative", minHeight: "85vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
         {/* Background image with overlay */}
         <div style={{ position: "absolute", inset: 0 }}>
           <img
@@ -146,16 +148,16 @@ export default function HomePage() {
           </span>
 
           {/* Main headline */}
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, color: "#fff", lineHeight: 1.2, margin: "0 auto", maxWidth: 750 }}>
+          <h1 className="hero-headline" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, color: "#fff", lineHeight: 1.2, margin: "0 auto", maxWidth: 750 }}>
             Explore India's <span style={{ color: "#e4a33c" }}>Hidden Gems</span><br />
             With Fellow Travellers
           </h1>
-          <p style={{ fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", color: "rgba(255,255,255,0.75)", maxWidth: 600, margin: "16px auto 0", lineHeight: 1.6 }}>
+          <p className="hero-subtitle" style={{ fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", color: "rgba(255,255,255,0.75)", maxWidth: 600, margin: "16px auto 0", lineHeight: 1.6 }}>
             Weekend trips, treks, camping & couple packages from Hyderabad & Bangalore. Budget-friendly, community-driven, departures every week.
           </p>
 
           {/* Search/filter bar */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", marginTop: 32, background: "rgba(255,255,255,0.12)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 16, padding: "16px 20px", maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
+          <div className="hero-search-bar" style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", marginTop: 32, background: "rgba(255,255,255,0.12)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 16, padding: "16px 20px", maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
             <select style={{ flex: 1, minWidth: 140, padding: "12px 16px", borderRadius: 10, border: "none", background: "rgba(255,255,255,0.9)", fontSize: 14, fontWeight: 500, color: "#333", outline: "none" }}>
               <option>📍 Destination</option>
               <option>Gokarna</option>
@@ -178,7 +180,7 @@ export default function HomePage() {
           </div>
 
           {/* Quick destination chips */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginTop: 24 }}>
+          <div className="dest-chips" style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginTop: 24 }}>
             {[
               { name: "Goa", emoji: "🏖️" },
               { name: "Gokarna", emoji: "🌊" },
@@ -202,7 +204,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== 2N/3D | EX:HYD ======== */}
-      <section style={{ padding: "60px 0" }}>
+      <section className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>2N/3D | EX:HYD</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>
@@ -211,28 +213,28 @@ export default function HomePage() {
           <p style={{ fontSize: 14, color: "#666", maxWidth: 800, marginBottom: 30 }}>
             Plan the perfect weekend escape with our 2 Nights / 3 Days group tour packages from Hyderabad. Discover top-rated destinations like Gokarna, Coorg, Ooty, Dandeli, Murudeshwar, and more. Our budget-friendly weekend trips are ideal for solo travelers, friends, and groups — every Friday departure guaranteed!
           </p>
-          <div className="product-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+          <div className="product-grid">
             {products.hydWeekend.map((p, i) => <ProductCard key={i} p={p} />)}
           </div>
         </div>
       </section>
 
       {/* ======== LONG TRIPS ======== */}
-      <section style={{ padding: "60px 0", background: "#f8f5f2" }}>
+      <section className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>LONG TRIPS</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>Backpacking Trips</h2>
           <p style={{ fontSize: 14, color: "#666", maxWidth: 800, marginBottom: 30 }}>
             Join budget-friendly backpacking trips from Hyderabad to Kerala, Manali, Kashmir, Meghalaya & more. Perfect for solo travelers and adventure seekers — explore offbeat places, connect with new people, and travel light. Weekly group departures!
           </p>
-          <div className="product-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+          <div className="product-grid">
             {products.longTrips.map((p, i) => <ProductCard key={i} p={p} />)}
           </div>
         </div>
       </section>
 
       {/* ======== 2N/3D | EX: BLR ======== */}
-      <section style={{ padding: "60px 0" }}>
+      <section className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>2N/3D | EX: BLR</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>
@@ -241,16 +243,16 @@ export default function HomePage() {
           <p style={{ fontSize: 14, color: "#666", maxWidth: 800, marginBottom: 30 }}>
             Discover exciting weekend getaways from Bangalore with our 2 Nights / 3 Days group travel packages. Visit scenic destinations like Coorg, Chikmagalur, Gokarna, Dandeli, Ooty, and more.
           </p>
-          <div className="product-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+          <div className="product-grid">
             {products.blrTrips.map((p, i) => <ProductCard key={i} p={p} />)}
           </div>
         </div>
       </section>
 
       {/* ======== MONSOON + COUPLE SPLIT ======== */}
-      <section style={{ padding: "60px 0", background: "#f8f5f2" }}>
+      <section className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
-          <div className="dual-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          <div className="dual-grid">
             <div style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Monsoon SPL</span>
               <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600, marginTop: 8 }}>🌧️ Monsoon Treks</h3>
@@ -266,19 +268,19 @@ export default function HomePage() {
           </div>
 
           {/* Couple packages */}
-          <div className="product-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginTop: 40 }}>
+          <div className="product-grid" style={{ marginTop: 40 }}>
             {products.coupleTrips.map((p, i) => <ProductCard key={i} p={p} />)}
           </div>
         </div>
       </section>
 
       {/* ======== CAMPING ======== */}
-      <section style={{ padding: "60px 0", background: "linear-gradient(135deg, #000000 0%, #1a1515 50%, #1d3d45 100%)" }}>
+      <section className="section-pad" style={{ padding: "60px 0", background: "linear-gradient(135deg, #000000 0%, #1a1515 50%, #1d3d45 100%)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#e4a33c", letterSpacing: 1 }}>Camping Special</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8, color: "#fff" }}>Weekend Camping</h2>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", maxWidth: 800, marginBottom: 30 }}>Camp under the stars with our handpicked camping experiences near Hyderabad & Bangalore.</p>
-          <div className="product-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+          <div className="product-grid">
             {products.campingTrips.map((p, i) => <ProductCard key={i} p={p} />)}
           </div>
         </div>
@@ -287,7 +289,7 @@ export default function HomePage() {
       {/* ======== FEATURES BAR ======== */}
       <section style={{ padding: "40px 0", borderTop: "1px solid #e5e0db", borderBottom: "1px solid #e5e0db" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
-          <div className="features-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+          <div className="features-grid">
             {[
               { icon: "🗺️", title: "25+ Destinations", desc: "Explore handpicked getaways" },
               { icon: "🎫", title: "No Fake Tickets", desc: "100% confirmed departures" },
@@ -306,11 +308,11 @@ export default function HomePage() {
       </section>
 
       {/* ======== REVIEWS ======== */}
-      <section style={{ padding: "60px 0" }}>
+      <section className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Client Reviews</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 30 }}>What Our Travellers Say</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          <div className="three-col-grid">
             {products.reviews.map((r, i) => (
               <div key={i} style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
                 <div style={{ color: "#e4a33c", fontSize: 16, letterSpacing: 2 }}>{"★".repeat(r.stars)}</div>
@@ -331,11 +333,11 @@ export default function HomePage() {
       </section>
 
       {/* ======== BLOG ======== */}
-      <section style={{ padding: "60px 0", background: "#f8f5f2" }}>
+      <section className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Our Blog</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 30 }}>Travel Stories & Guides</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          <div className="three-col-grid">
             {products.blogPosts.map((b, i) => (
               <div key={i} style={{ background: "#fff", borderRadius: 12, overflow: "hidden", border: "1px solid #e5e0db" }}>
                 <div style={{ height: 200, background: "#e8f4f8", overflow: "hidden" }}>
@@ -354,7 +356,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== HONEYMOON CTA ======== */}
-      <section style={{ padding: "60px 0", background: "linear-gradient(135deg, #25accd 0%, #187a90 100%)", textAlign: "center" }}>
+      <section className="section-pad" style={{ padding: "60px 0", background: "linear-gradient(135deg, #25accd 0%, #187a90 100%)", textAlign: "center" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#e4a33c", letterSpacing: 1 }}>Honeymoon Special</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.5rem, 3vw, 2.5rem)", fontWeight: 600, marginTop: 10, color: "#fff" }}>💍 Honeymoon Tour Packages</h2>

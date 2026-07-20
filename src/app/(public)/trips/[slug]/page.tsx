@@ -175,15 +175,20 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
   return (
     <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#f8f5f2", color: "#1a1a1a", lineHeight: 1.6 }}>
       <style>{`
-        @media (max-width: 768px) {
-          .detail-grid { grid-template-columns: 1fr !important; }
-          .itinerary-details { padding-left: 0 !important; }
+        @media (max-width: 640px) {
+          .detail-hero-img { aspect-ratio: 4/3 !important; }
+          .detail-breadcrumb { padding-top: 88px !important; padding-left: 16px !important; padding-right: 16px !important; }
+          .detail-section { padding-left: 16px !important; padding-right: 16px !important; }
+        }
+        @media (max-width: 480px) {
+          .detail-price { font-size: 28px !important; }
+          .quick-info-wrap { gap: 10px !important; }
         }
       `}</style>
 
       {/* Breadcrumb */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 20px 0" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#888", marginBottom: 20 }}>
+      <div className="detail-breadcrumb" style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 20px 0" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#888", marginBottom: 20, flexWrap: "wrap" }}>
           <Link href="/" style={{ color: "#888", textDecoration: "none" }}>Home</Link>
           <span>›</span>
           <Link href="/trips" style={{ color: "#888", textDecoration: "none" }}>Trips</Link>
@@ -193,8 +198,8 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
       </div>
 
       {/* Hero image */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
-        <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", aspectRatio: "21/9", marginBottom: 30 }}>
+      <div className="detail-section" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
+        <div className="detail-hero-img" style={{ position: "relative", borderRadius: 16, overflow: "hidden", aspectRatio: "21/9", marginBottom: 30 }}>
           <img src={trip.image} alt={trip.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }} />
           <div style={{ position: "absolute", bottom: 24, left: 24, color: "#fff" }}>
@@ -204,13 +209,13 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
         </div>
       </div>
 
-      <div className="detail-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 30, maxWidth: 1200, margin: "0 auto", padding: "0 20px 60px" }}>
+      <div className="detail-grid" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px 60px" }}>
 
         {/* ===== LEFT COLUMN ===== */}
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
 
           {/* Quick Info Bar */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 16, background: "#fff", borderRadius: 12, padding: 20, border: "1px solid #e5e0db" }}>
+          <div className="quick-info-wrap" style={{ display: "flex", flexWrap: "wrap", gap: 16, background: "#fff", borderRadius: 12, padding: 20, border: "1px solid #e5e0db" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
               <span style={{ fontSize: 18 }}>📅</span> <strong>{trip.duration}</strong>
             </div>
@@ -225,7 +230,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
           {/* Highlights */}
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 700, margin: "0 0 12px" }}>✨ Trip Highlights</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            <div className="highlights-grid">
               {trip.highlights.map((h, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, color: "#555" }}>
                   <span style={{ color: "#33abcb", fontSize: 16 }}>✓</span> {h}
@@ -258,7 +263,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
           </div>
 
           {/* Inclusions & Exclusions */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          <div className="inc-exc-grid">
             <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#16a34a" }}>✅ Inclusions</h2>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
@@ -305,7 +310,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
             {/* Price Card */}
             <div style={{ background: "#fff", borderRadius: 16, padding: 28, border: "1px solid #e5e0db", boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-                <span style={{ fontSize: 32, fontWeight: 800, color: "#1a1a1a" }}>₹{trip.price.toLocaleString("en-IN")}</span>
+                <span className="detail-price" style={{ fontSize: 32, fontWeight: 800, color: "#1a1a1a" }}>₹{trip.price.toLocaleString("en-IN")}</span>
                 {hasDiscount && (
                   <span style={{ fontSize: 16, color: "#bbb", textDecoration: "line-through" }}>₹{trip.origPrice.toLocaleString("en-IN")}</span>
                 )}
