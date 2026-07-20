@@ -110,7 +110,7 @@ export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#fff", color: "#1a1a1a", lineHeight: 1.6, overflowX: "hidden" }}>
+    <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#F3EEE3", color: "#1a1a1a", lineHeight: 1.6, overflowX: "hidden" }}>
       {/* ======== INLINE STYLES ======== */}
       <style>{`
         /* Mobile/small-tablet specific overrides for inline components */
@@ -220,7 +220,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== LONG TRIPS ======== */}
-      <section className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
+      <section className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>LONG TRIPS</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>Backpacking Trips</h2>
@@ -250,7 +250,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== MONSOON + COUPLE SPLIT ======== */}
-      <section className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
+      <section className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <div className="dual-grid">
             <div style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
@@ -333,7 +333,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== BLOG ======== */}
-      <section className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
+      <section className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Our Blog</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 30 }}>Travel Stories & Guides</h2>

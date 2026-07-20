@@ -173,11 +173,10 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
   const hasDiscount = trip.origPrice > trip.price;
 
   return (
-    <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#f8f5f2", color: "#1a1a1a", lineHeight: 1.6 }}>
+    <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#F3EEE3", color: "#1a1a1a", lineHeight: 1.6 }}>
       <style>{`
         @media (max-width: 640px) {
           .detail-hero-img { aspect-ratio: 4/3 !important; }
-          .detail-breadcrumb { padding-top: 88px !important; padding-left: 16px !important; padding-right: 16px !important; }
           .detail-section { padding-left: 16px !important; padding-right: 16px !important; }
         }
         @media (max-width: 480px) {
@@ -187,7 +186,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
       `}</style>
 
       {/* Breadcrumb */}
-      <div className="detail-breadcrumb" style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 20px 0" }}>
+      <div className="detail-breadcrumb" style={{ maxWidth: 1200, margin: "0 auto", padding: "8px 20px 0" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#888", marginBottom: 20, flexWrap: "wrap" }}>
           <Link href="/" style={{ color: "#888", textDecoration: "none" }}>Home</Link>
           <span>›</span>

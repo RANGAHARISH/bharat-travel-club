@@ -13,6 +13,9 @@
   --color-brand-ink: #000000;
   --color-brand-ink-light: #271c1e;
 
+  /* Warm background */
+  --color-bg-warm: #F3EEE3;
+
   /* Semantic aliases */
   --color-primary: var(--color-brand-blue);
   --color-primary-dark: var(--color-brand-blue-dark);
@@ -29,7 +32,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    @apply bg-white text-brand-ink antialiased;
+    @apply bg-bg-warm text-brand-ink antialiased;
     overflow-x: hidden;
   }
   ::selection {
