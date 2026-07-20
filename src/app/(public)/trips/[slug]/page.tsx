@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Calendar, MapPin, Phone, Users, Sparkles, Check, X, ClipboardList, AlertTriangle, Heart, ChevronRight, Sun, Waves, Clock, Moon, UtensilsCrossed, Home, Tent, Train, Truck, BedDouble, Ship, User, DollarSign, IdCard, Backpack, RefreshCw, CreditCard, Luggage, Coffee } from "lucide-react";
 import type { Metadata } from "next";
 
 // ===== TRIP DETAILS DATABASE (fallback when Supabase not connected) =====
@@ -106,29 +107,29 @@ const tripDetails: Record<string, {
       }
     ],
     inclusions: [
-      "🚆 Train Tickets (Both Sides)",
-      "🚐 3 Days Local Transport",
-      "🏠 2 Nights Accommodation",
-      "🍳 1 Day Food (Dandeli Resort)",
-      "🛶 3 Water Activities (Kayaking, Coracle Ride & Zipline)",
-      "👨‍✈️ Trip Organizer",
-      "🛣️ Toll & Driver Allowance"
+      "Train Tickets (Both Sides)",
+      "3 Days Local Transport",
+      "2 Nights Accommodation",
+      "1 Day Food (Dandeli Resort)",
+      "3 Water Activities (Kayaking, Coracle Ride & Zipline)",
+      "Trip Organizer",
+      "Toll & Driver Allowance"
     ],
     exclusions: [
-      "🍽️ Food for 2 Days",
-      "❌ Anything not mentioned in inclusions",
-      "💰 Extra charges for AC Train Tickets",
-      "💑 Couple Room Charges"
+      "Food for 2 Days",
+      "Anything not mentioned in inclusions",
+      "Extra charges for AC Train Tickets",
+      "Couple Room Charges"
     ],
     notes: [
-      "Water activities are managed by Dandeli Forest Authorities. If activities are closed due to forest decisions, Bharat Travel Club is not responsible; however, we will try our best to arrange alternatives.",
-      "Advance payment is non-refundable.",
-      "Carry a valid ID proof and a copy of train tickets.",
-      "Extra charges applicable for Tatkal & Premium Tatkal train bookings.",
-      "This is a budget-friendly trip and not a luxury package. We strive to make your journey comfortable and memorable within budget.",
-      "Trip management reserves the right to modify routes, activities, timings, duration, or participant allocation depending on weather and operational conditions.",
-      "In case of vehicle breakdowns, traffic issues, or weather conditions, some places may be skipped.",
-      "Charges are collected for the services provided (travel, stay, arrangements, and coordination), not for specific sightseeing points."
+      "🌊 Water activities are managed by Dandeli Forest Authorities. If closed by forest officials, we'll arrange alternatives.",
+      "💰 Advance payment is non-refundable.",
+      "🪪 Carry a valid ID proof and a copy of train tickets.",
+      "🚆 Extra charges apply for Tatkal & Premium Tatkal train bookings.",
+      "🎒 This is a budget-friendly trip, not a luxury package.",
+      "🔄 Routes, activities & timings may change due to weather or operational reasons.",
+      "🚐 Some places may be skipped in case of vehicle breakdowns, traffic, or bad weather.",
+      "💳 Charges cover travel, stay, arrangements & coordination — not specific sightseeing entry fees."
     ],
     cancelPolicy: [
       "Cancellation within 2 days prior to trip → Full amount payable",
@@ -137,7 +138,7 @@ const tripDetails: Record<string, {
   },
   "gokarna-dandeli-2n-3d-couple-package": {
     title: "Gokarna Dandeli 2N/3D Couple Package",
-    tagline: "💕 GOKARNA • DANDELI COUPLE GETAWAY",
+    tagline: "GOKARNA • DANDELI COUPLE GETAWAY",
     price: 37000,
     origPrice: 40000,
     duration: "2 Nights | 3 Days",
@@ -145,14 +146,14 @@ const tripDetails: Record<string, {
     contact: "7396952195",
     image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=600&fit=crop",
     description: "A romantic getaway for couples exploring the best of Karnataka's coast and forests.",
-    highlights: ["💕 Couple Friendly", "🏖️ Gokarna Beaches", "🌲 Dandeli Resort", "🛶 Water Activities"],
+    highlights: ["Couple Friendly", "Gokarna Beaches", "Dandeli Resort", "Water Activities"],
     itinerary: [
       { day: "Day 1", title: "Arrival & Dandeli", details: ["Check-in at Dandeli Resort", "Evening campfire & dinner"] },
       { day: "Day 2", title: "Coastal Tour", details: ["Visit Murudeshwar Temple", "Gokarna Beach walk", "Overnight stay"] },
       { day: "Day 3", title: "Departure", details: ["Morning beach trek", "Check-out & return"] }
     ],
-    inclusions: ["🏠 2 Nights Accommodation", "🚐 Local Transport", "🍳 Breakfast", "👨‍✈️ Trip Organizer"],
-    exclusions: ["🍽️ Lunch & Dinner", "💰 Extra charges"],
+    inclusions: ["2 Nights Accommodation", "Local Transport", "Breakfast", "Trip Organizer"],
+    exclusions: ["Lunch & Dinner", "Extra charges"],
     notes: ["Advance payment is non-refundable.", "Carry valid ID proof."],
     cancelPolicy: ["Cancellation within 2 days → Full amount", "Cancellation within 1 week → 50%"]
   }
@@ -216,23 +217,24 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
           {/* Quick Info Bar */}
           <div className="quick-info-wrap" style={{ display: "flex", flexWrap: "wrap", gap: 16, background: "#fff", borderRadius: 12, padding: 20, border: "1px solid #e5e0db" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
-              <span style={{ fontSize: 18 }}>📅</span> <strong>{trip.duration}</strong>
+              <Calendar size={16} color="#25accd" /> <strong>{trip.duration}</strong>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
-              <span style={{ fontSize: 18 }}>📍</span> {trip.location}
+              <MapPin size={16} color="#25accd" /> {trip.location}
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14 }}>
-              <span style={{ fontSize: 18 }}>📞</span> {trip.contact}
+              <Phone size={16} color="#25accd" /> {trip.contact}
             </div>
           </div>
 
           {/* Highlights */}
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 700, margin: "0 0 12px" }}>✨ Trip Highlights</h2>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 700, margin: "0 0 12px", display: "flex", alignItems: "center", gap: 8 }}>
+              <Sparkles size={20} color="#e4a33c" /> Trip Highlights</h2>
             <div className="highlights-grid">
               {trip.highlights.map((h, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, color: "#555" }}>
-                  <span style={{ color: "#33abcb", fontSize: 16 }}>✓</span> {h}
+                  <Check size={14} color="#33abcb" className="shrink-0" /> {h}
                 </div>
               ))}
             </div>
@@ -240,42 +242,65 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
 
           {/* Full Itinerary */}
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 700, margin: "0 0 16px" }}>📋 Detailed Itinerary</h2>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 700, margin: "0 0 16px", display: "flex", alignItems: "center", gap: 8 }}>
+              <ClipboardList size={20} color="#25accd" /> Detailed Itinerary</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              {trip.itinerary.map((day, i) => (
-                <div key={i} style={{ borderLeft: "3px solid #33abcb", paddingLeft: 16 }}>
-                  <h3 style={{ fontSize: 16, fontWeight: 700, color: "#33abcb", margin: "0 0 4px", display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ background: "#33abcb", color: "#fff", width: 28, height: 28, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>{i + 1}</span>
-                    {day.day} – {day.title}
-                  </h3>
-                  <div className="itinerary-details" style={{ paddingLeft: 36 }}>
-                    {day.details.map((line, j) => (
-                      line === "" ? <br key={j} /> :
-                      <p key={j} style={{ margin: "2px 0", fontSize: 13.5, color: line.startsWith("  •") || line.startsWith("  –") ? "#666" : "#444", whiteSpace: "pre-wrap", paddingLeft: line.startsWith("  ") ? 12 : 0 }}>
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              ))}
+            {trip.itinerary.map((day, i) => (
+            <div key={i} style={{ borderLeft: "3px solid #33abcb", paddingLeft: 16 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "#33abcb", margin: "0 0 4px", display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ background: "#33abcb", color: "#fff", width: 28, height: 28, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>{i + 1}</span>
+                {day.day} – {day.title}
+              </h3>
+              <div className="itinerary-details" style={{ paddingLeft: 36 }}>
+                {day.details.map((line, j) => {
+                  // Emoji → icon mapping for section headers
+                  const iconMap: [string, React.ReactNode][] = [
+                    ["☀️", <Sun key="s" size={16} color="#e4a33c" style={{ flexShrink: 0 }} />],
+                    ["🌊", <Waves key="w" size={16} color="#25accd" style={{ flexShrink: 0 }} />],
+                    ["⏳", <Clock key="c" size={16} color="#888" style={{ flexShrink: 0 }} />],
+                    ["🌙", <Moon key="m" size={16} color="#4a6fa5" style={{ flexShrink: 0 }} />],
+                    ["🍽️", <UtensilsCrossed key="u" size={16} color="#e4a33c" style={{ flexShrink: 0 }} />],
+                    ["🏠", <Home key="h" size={16} color="#25accd" style={{ flexShrink: 0 }} />],
+                    ["🥾", <Tent key="t" size={16} color="#e4a33c" style={{ flexShrink: 0 }} />],
+                    ["🚆", <Train key="tr" size={16} color="#25accd" style={{ flexShrink: 0 }} />],
+                  ];
+                  if (line === "") return <br key={j} />;
+                  for (const [emoji, icon] of iconMap) {
+                    if (line.startsWith(emoji)) {
+                      return (
+                        <p key={j} style={{ margin: "6px 0 2px", fontSize: 13.5, fontWeight: 600, color: "#333", display: "flex", alignItems: "center", gap: 6 }}>
+                          {icon} <span>{line.replace(emoji, "").trim()}</span>
+                        </p>
+                      );
+                    }
+                  }
+                  return (
+                    <p key={j} style={{ margin: "2px 0", fontSize: 13.5, color: line.startsWith("  •") || line.startsWith("  –") ? "#666" : "#444", whiteSpace: "pre-wrap", paddingLeft: line.startsWith("  ") ? 12 : 0 }}>
+                      {line}
+                    </p>
+                  );
+                })}
+              </div>
+            </div>
+            ))}
             </div>
           </div>
 
           {/* Inclusions & Exclusions */}
           <div className="inc-exc-grid">
             <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#16a34a" }}>✅ Inclusions</h2>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#16a34a", display: "flex", alignItems: "center", gap: 6 }}><Check size={18} /> Inclusions</h2>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
                 {trip.inclusions.map((item, i) => (
-                  <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><span style={{ color: "#16a34a", flexShrink: 0 }}>✓</span> {item}</li>
+                  <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><Check size={14} color="#16a34a" className="mt-0.5 shrink-0" /> {item}</li>
                 ))}
               </ul>
             </div>
             <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#dc2626" }}>❌ Exclusions</h2>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#dc2626", display: "flex", alignItems: "center", gap: 6 }}><X size={18} /> Exclusions</h2>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
                 {trip.exclusions.map((item, i) => (
-                  <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><span style={{ color: "#dc2626", flexShrink: 0 }}>✕</span> {item}</li>
+                  <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><X size={14} color="#dc2626" className="mt-0.5 shrink-0" /> {item}</li>
                 ))}
               </ul>
             </div>
@@ -283,17 +308,20 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
 
           {/* Important Notes */}
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#e4a33c" }}>⚠️ Important Notes</h2>
-            <ol style={{ paddingLeft: 20, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#e4a33c", display: "flex", alignItems: "center", gap: 6 }}><AlertTriangle size={18} /> Important Notes</h2>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
               {trip.notes.map((note, i) => (
-                <li key={i} style={{ fontSize: 13, color: "#555", lineHeight: 1.5 }}>{note}</li>
+                <li key={i} style={{ fontSize: 13, color: "#555", lineHeight: 1.5, display: "flex", gap: 8 }}>
+                  <span style={{ color: "#e4a33c", flexShrink: 0 }}>•</span>
+                  <span>{note}</span>
+                </li>
               ))}
-            </ol>
+            </ul>
           </div>
 
           {/* Cancellation Policy */}
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#dc2626" }}>📋 Cancellation Policy</h2>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#dc2626", display: "flex", alignItems: "center", gap: 6 }}><ClipboardList size={18} /> Cancellation Policy</h2>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
               {trip.cancelPolicy.map((policy, i) => (
                 <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><span style={{ color: "#dc2626" }}>•</span> {policy}</li>
@@ -318,16 +346,16 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
 
               <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#555" }}>
-                  <span style={{ fontSize: 16 }}>📅</span> <strong>{trip.duration}</strong>
+                  <Calendar size={15} color="#25accd" /> <strong>{trip.duration}</strong>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#555" }}>
-                  <span style={{ fontSize: 16 }}>📍</span> {trip.location}
+                  <MapPin size={15} color="#25accd" /> {trip.location}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#555" }}>
-                  <span style={{ fontSize: 16 }}>📞</span> {trip.contact}
+                  <Phone size={15} color="#25accd" /> {trip.contact}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#555" }}>
-                  <span style={{ fontSize: 16 }}>👥</span> Group Departure
+                  <Users size={15} color="#25accd" /> Group Departure
                 </div>
               </div>
 

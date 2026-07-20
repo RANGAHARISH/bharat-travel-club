@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { MapPin, Calendar, Compass, Ticket, MessageCircle, Heart, Tent, CloudSun, ArrowRight } from "lucide-react";
 
 // ===== BRAND COLORS =====
 // Primary: #25accd (teal from logo)
@@ -92,14 +93,16 @@ function ProductCard({ p }: { p: typeof products.hydWeekend[0] }) {
             {p.title}
           </Link>
         </h3>
-        <p style={{ margin: "6px 0 0", fontSize: 12, color: "#888" }}>📍 {p.loc}</p>
+        <p style={{ margin: "6px 0 0", fontSize: 12, color: "#888", display: "flex", alignItems: "center", gap: 4 }}>
+          <MapPin size={12} color="#999" /> {p.loc}
+        </p>
         <p style={{ margin: "4px 0 0", fontSize: 12, color: "#aaa" }}>{p.dur}</p>
         <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>{p.price}</span>
           <span style={{ fontSize: 12, color: "#bbb", textDecoration: "line-through" }}>{p.orig}</span>
         </div>
-        <Link href={`/trips/${p.title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`} style={{ display: "inline-block", marginTop: 8, fontSize: 13, fontWeight: 600, color: "#25accd", textDecoration: "none" }}>
-          Explore →
+        <Link href={`/trips/${p.title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`} style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: 8, fontSize: 13, fontWeight: 600, color: "#25accd", textDecoration: "none" }}>
+          Explore <ArrowRight size={13} />
         </Link>
       </div>
     </div>
@@ -113,7 +116,6 @@ export default function HomePage() {
     <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#F3EEE3", color: "#1a1a1a", lineHeight: 1.6, overflowX: "hidden" }}>
       {/* ======== INLINE STYLES ======== */}
       <style>{`
-        /* Mobile/small-tablet specific overrides for inline components */
         @media (max-width: 640px) {
           .hero-section { min-height: 90dvh !important; }
           .section-pad { padding: 40px 0 !important; }
@@ -143,8 +145,8 @@ export default function HomePage() {
 
         <div style={{ position: "relative", zIndex: 2, textAlign: "center", padding: "40px 20px", maxWidth: 900, margin: "0 auto", width: "100%" }}>
           {/* Badge */}
-          <span style={{ display: "inline-block", background: "rgba(228,163,60,0.2)", border: "1px solid rgba(228,163,60,0.4)", color: "#e4a33c", fontSize: 12, fontWeight: 600, padding: "6px 18px", borderRadius: 50, letterSpacing: 1, marginBottom: 20, backdropFilter: "blur(4px)" }}>
-            🇮🇳 INDIA'S TRUSTED TRAVEL CLUB
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(228,163,60,0.2)", border: "1px solid rgba(228,163,60,0.4)", color: "#e4a33c", fontSize: 12, fontWeight: 600, padding: "6px 18px", borderRadius: 50, letterSpacing: 1, marginBottom: 20, backdropFilter: "blur(4px)" }}>
+            <Compass size={14} /> INDIA'S TRUSTED TRAVEL CLUB
           </span>
 
           {/* Main headline */}
@@ -159,7 +161,7 @@ export default function HomePage() {
           {/* Search/filter bar */}
           <div className="hero-search-bar" style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", marginTop: 32, background: "rgba(255,255,255,0.12)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 16, padding: "16px 20px", maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
             <select style={{ flex: 1, minWidth: 140, padding: "12px 16px", borderRadius: 10, border: "none", background: "rgba(255,255,255,0.9)", fontSize: 14, fontWeight: 500, color: "#333", outline: "none" }}>
-              <option>📍 Destination</option>
+              <option>Destination</option>
               <option>Gokarna</option>
               <option>Coorg</option>
               <option>Ooty</option>
@@ -169,7 +171,7 @@ export default function HomePage() {
               <option>Goa</option>
             </select>
             <select style={{ flex: 1, minWidth: 120, padding: "12px 16px", borderRadius: 10, border: "none", background: "rgba(255,255,255,0.9)", fontSize: 14, fontWeight: 500, color: "#333", outline: "none" }}>
-              <option>📅 Duration</option>
+              <option>Duration</option>
               <option>Weekend (2-3 days)</option>
               <option>Extended (4-5 days)</option>
               <option>Long Trip (6+ days)</option>
@@ -255,13 +257,17 @@ export default function HomePage() {
           <div className="dual-grid">
             <div style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Monsoon SPL</span>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600, marginTop: 8 }}>🌧️ Monsoon Treks</h3>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600, marginTop: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                <CloudSun size={28} color="#25accd" /> Monsoon Treks
+              </h3>
               <p style={{ fontSize: 14, color: "#666", marginTop: 8 }}>Escape into the Sahyadris this rainy season with our handpicked treks featuring misty forests, hidden waterfalls, ancient forts, and magical trails perfect for monsoon explorers.</p>
               <Link href="/category/trek" style={{ display: "inline-block", marginTop: 16, padding: "10px 24px", background: "#25accd", color: "#fff", borderRadius: 50, fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View Treks →</Link>
             </div>
             <div style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Couple SPL</span>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600, marginTop: 8 }}>💕 Couple Tour Packages</h3>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600, marginTop: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                <Heart size={28} color="#e4a33c" /> Couple Tour Packages
+              </h3>
               <p style={{ fontSize: 14, color: "#666", marginTop: 8 }}>Perfect 2N/3D escapes for couples — cozy stays, beautiful destinations, and private experiences.</p>
               <Link href="/category/couple" style={{ display: "inline-block", marginTop: 16, padding: "10px 24px", background: "#25accd", color: "#fff", borderRadius: 50, fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View Packages →</Link>
             </div>
@@ -278,7 +284,9 @@ export default function HomePage() {
       <section className="section-pad" style={{ padding: "60px 0", background: "linear-gradient(135deg, #000000 0%, #1a1515 50%, #1d3d45 100%)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#e4a33c", letterSpacing: 1 }}>Camping Special</span>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8, color: "#fff" }}>Weekend Camping</h2>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8, color: "#fff", display: "flex", alignItems: "center", gap: 8 }}>
+            <Tent size={28} color="#e4a33c" /> Weekend Camping
+          </h2>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", maxWidth: 800, marginBottom: 30 }}>Camp under the stars with our handpicked camping experiences near Hyderabad & Bangalore.</p>
           <div className="product-grid">
             {products.campingTrips.map((p, i) => <ProductCard key={i} p={p} />)}
@@ -291,12 +299,12 @@ export default function HomePage() {
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <div className="features-grid">
             {[
-              { icon: "🗺️", title: "25+ Destinations", desc: "Explore handpicked getaways" },
-              { icon: "🎫", title: "No Fake Tickets", desc: "100% confirmed departures" },
-              { icon: "💬", title: "Top Notch Support", desc: "24/7 travel assistance" },
+              { icon: <MapPin size={28} />, title: "25+ Destinations", desc: "Explore handpicked getaways" },
+              { icon: <Ticket size={28} />, title: "No Fake Tickets", desc: "100% confirmed departures" },
+              { icon: <MessageCircle size={28} />, title: "Top Notch Support", desc: "24/7 travel assistance" },
             ].map((f, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <span style={{ fontSize: "1.8rem" }}>{f.icon}</span>
+                <span style={{ color: "#25accd", display: "flex", flexShrink: 0 }}>{f.icon}</span>
                 <div>
                   <h4 style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>{f.title}</h4>
                   <p style={{ margin: "2px 0 0", fontSize: 13, color: "#888" }}>{f.desc}</p>
@@ -344,10 +352,14 @@ export default function HomePage() {
                   <img src={imageUrls[b.img] || imageUrls["🏔️"]} alt={b.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
                 </div>
                 <div style={{ padding: 20 }}>
-                  <p style={{ fontSize: 12, color: "#999" }}>📅 {b.date}</p>
+                  <p style={{ fontSize: 12, color: "#999", display: "flex", alignItems: "center", gap: 4 }}>
+                    <Calendar size={12} color="#bbb" /> {b.date}
+                  </p>
                   <h3 style={{ fontSize: 15, fontWeight: 600, marginTop: 6 }}>{b.title}</h3>
                   <p style={{ fontSize: 13, color: "#666", marginTop: 6 }}>{b.desc}</p>
-                  <Link href="/blog" style={{ display: "inline-block", marginTop: 10, fontSize: 13, fontWeight: 600, color: "#25accd", textDecoration: "none" }}>Read More →</Link>
+                  <Link href="/blog" style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: 10, fontSize: 13, fontWeight: 600, color: "#25accd", textDecoration: "none" }}>
+                    Read More <ArrowRight size={13} />
+                  </Link>
                 </div>
               </div>
             ))}
@@ -359,7 +371,9 @@ export default function HomePage() {
       <section className="section-pad" style={{ padding: "60px 0", background: "linear-gradient(135deg, #25accd 0%, #187a90 100%)", textAlign: "center" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#e4a33c", letterSpacing: 1 }}>Honeymoon Special</span>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.5rem, 3vw, 2.5rem)", fontWeight: 600, marginTop: 10, color: "#fff" }}>💍 Honeymoon Tour Packages</h2>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.5rem, 3vw, 2.5rem)", fontWeight: 600, marginTop: 10, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
+            <Heart size={32} color="#e4a33c" fill="#e4a33c" /> Honeymoon Tour Packages
+          </h2>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", maxWidth: 600, margin: "10px auto 24px" }}>Start your new journey together with our exclusive honeymoon packages. Romantic getaways in Kashmir, Kerala, Manali & more.</p>
           <Link href="/category/couple" style={{ display: "inline-block", padding: "12px 32px", background: "#e4a33c", color: "#000", borderRadius: 50, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>Explore Honeymoon →</Link>
         </div>

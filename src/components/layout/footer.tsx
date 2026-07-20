@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Phone, Mail, MapPin } from "lucide-react";
 
 function FacebookIcon() {
   return (
@@ -101,9 +102,9 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Contact Us</h4>
             <div className="space-y-2 text-sm text-white/60 footer-contact">
-              <p>📞 +91 98765 43210</p>
-              <p>✉️ info@bharathtravels.in</p>
-              <p>📍 Hyderabad, India</p>
+              <p className="flex items-center gap-2"><Phone size={14} className="text-[#25accd]" /> +91 98765 43210</p>
+              <p className="flex items-center gap-2"><Mail size={14} className="text-[#e4a33c]" /> info@bharathtravels.in</p>
+              <p className="flex items-center gap-2"><MapPin size={14} className="text-[#25accd]" /> Hyderabad, India</p>
             </div>
             <div className="flex gap-3 mt-4">
               {socialLinks.map((social) => (
