@@ -84,9 +84,7 @@ export default function AccountPage() {
           {bookings.length > 0 ? (
             bookings.map((booking) => (
               <div key={booking.id} className="flex items-center gap-4 rounded-xl border border-brand-teal/10 bg-white p-4">
-                <div className="w-20 h-20 rounded-lg bg-brand-cream flex items-center justify-center text-2xl flex-shrink-0">
-                  🏕️
-                </div>
+                <div className="w-20 h-20 rounded-lg bg-brand-cream flex items-center justify-center text-2xl flex-shrink-0"></div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-brand-ink truncate">{booking.trip?.title || "Trip"}</p>
                   <p className="text-sm text-brand-ink/60">

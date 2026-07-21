@@ -9,8 +9,8 @@ interface TripCardProps {
 
 export function TripCard({ trip }: TripCardProps) {
   const hasDiscount = trip.discounted_price && trip.discounted_price > trip.price;
-  const emojis = ["🌊", "🏔️", "🌄", "🌲", "🏛️", "🌴", "🌿", "☕", "⛺", "🏜️", "🌙"];
-  const emoji = emojis[trip.title.length % emojis.length];
+  const emojis = [];
+  const emoji = "";
 
   return (
     <Link href={`/trips/${trip.slug}`} className="group block">

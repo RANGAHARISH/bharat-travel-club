@@ -40,7 +40,7 @@ export default async function TripsPage() {
         </div>
       ) : (
         <div className="text-center py-20">
-          <div className="text-5xl mb-4">🏕️</div>
+          <div className="text-5xl mb-4"></div>
           <h2 className="font-serif text-2xl font-bold text-brand-ink mb-2">No trips yet</h2>
           <p className="text-brand-ink/60 mb-6">We&apos;re adding new adventures soon. Check back later! (Connect Supabase to see trips)</p>
           <Link href="/" className="text-brand-teal hover:underline font-medium">Go home →</Link>

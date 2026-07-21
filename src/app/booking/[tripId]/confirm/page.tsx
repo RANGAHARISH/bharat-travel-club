@@ -7,7 +7,7 @@ export default function BookingConfirmPage() {
     <div className="mx-auto max-w-lg px-4 py-20 text-center">
       <div className="rounded-xl border border-green-200 bg-green-50 p-8 space-y-4">
         <CheckCircle className="h-16 w-16 text-green-600 mx-auto" />
-        <h1 className="font-serif text-2xl font-bold text-green-800">Booking Confirmed! 🎉</h1>
+        <h1 className="font-serif text-2xl font-bold text-green-800">Booking Confirmed!</h1>
         <p className="text-green-700">
           Your booking has been received. We&apos;ll send a confirmation email with all the details shortly.
         </p>

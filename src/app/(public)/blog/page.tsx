@@ -40,7 +40,7 @@ export default async function BlogPage() {
         </div>
       ) : (
         <div className="text-center py-20">
-          <div className="text-5xl mb-4">📝</div>
+          <div className="text-5xl mb-4"></div>
           <h2 className="font-serif text-2xl font-bold text-brand-ink mb-2">No posts yet</h2>
           <p className="text-brand-ink/60">We&apos;re working on some exciting travel content. Check back soon!</p>
         </div>

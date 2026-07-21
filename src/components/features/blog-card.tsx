@@ -21,7 +21,7 @@ export function BlogCard({ post }: BlogCardProps) {
               loading="lazy"
             />
           ) : (
-            <div className="flex h-full items-center justify-center text-3xl">📝</div>
+            <div className="flex h-full items-center justify-center text-3xl"></div>
           )}
         </div>
         <CardContent className="p-4 space-y-2">

@@ -22,7 +22,7 @@ export default function ForgotPasswordPage() {
   if (sent) {
     return (
       <div className="text-center space-y-4">
-        <div className="text-4xl">✉️</div>
+        <div className="text-4xl"></div>
         <h1 className="font-serif text-2xl font-bold text-brand-ink">Check Your Email</h1>
         <p className="text-sm text-brand-ink/60">We&apos;ve sent a password reset link to {email}</p>
         <Link href="/login" className="text-brand-teal hover:underline text-sm font-medium">Back to sign in</Link>
