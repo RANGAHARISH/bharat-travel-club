@@ -177,7 +177,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
       <style>{`
         @media (max-width: 640px) {
           .detail-hero-img { aspect-ratio: 4/3 !important; }
-          .detail-breadcrumb { padding-top: 88px !important; padding-left: 16px !important; padding-right: 16px !important; }
+          .detail-breadcrumb { padding-top: 24px !important; padding-left: 16px !important; padding-right: 16px !important; }
           .detail-section { padding-left: 16px !important; padding-right: 16px !important; }
         }
         @media (max-width: 480px) {
@@ -187,7 +187,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
       `}</style>
 
       {/* Breadcrumb */}
-      <div className="detail-breadcrumb" style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 20px 0" }}>
+      <div className="detail-breadcrumb" style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 20px 0" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#888", marginBottom: 20, flexWrap: "wrap" }}>
           <Link href="/" style={{ color: "#888", textDecoration: "none" }}>Home</Link>
           <span>›</span>
@@ -313,11 +313,11 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
           {/* Important Notes */}
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#e4a33c" }}>Important Notes</h2>
-            <ol style={{ paddingLeft: 20, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
               {trip.notes.map((note, i) => (
-                <li key={i} style={{ fontSize: 13, color: "#555", lineHeight: 1.5 }}>{note}</li>
+                <li key={i} style={{ fontSize: 13, color: "#555", lineHeight: 1.5, display: "flex", gap: 8 }}><span style={{ color: "#e4a33c", flexShrink: 0 }}>•</span> {note}</li>
               ))}
-            </ol>
+            </ul>
           </div>
 
           {/* Cancellation Policy */}
