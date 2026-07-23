@@ -262,7 +262,7 @@ export default function HomePage() {
         <section id="search-results" className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 30 }}>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, margin: 0 }}>
+              <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, margin: 0 }}>
                 Search Results {activeSearch.dest !== "Destination" ? `for ${activeSearch.dest}` : ""}
               </h2>
               <button onClick={() => setActiveSearch(null)} style={{ background: "none", border: "none", color: "#666", cursor: "pointer", textDecoration: "underline", fontSize: 14 }}>
@@ -305,7 +305,7 @@ export default function HomePage() {
       <section id="weekend-trips" className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>2N/3D | EX:HYD</span>
-          <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, marginTop: 8, marginBottom: 8 }}>
+          <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, marginTop: 8, marginBottom: 30 }}>
             2N/3D Weekend Group Trips From Hyderabad – Weekly Friday Departures
           </h2>
           <div className="product-grid">
@@ -318,10 +318,7 @@ export default function HomePage() {
       <section id="long-trips" className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>LONG TRIPS</span>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>Backpacking Trips</h2>
-          <p style={{ fontSize: 14, color: "#666", maxWidth: 800, marginBottom: 30 }}>
-            Join budget-friendly backpacking trips from Hyderabad to Kerala, Manali, Kashmir, Meghalaya & more. Perfect for solo travelers and adventure seekers — explore offbeat places, connect with new people, and travel light. Weekly group departures!
-          </p>
+          <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, marginTop: 8, marginBottom: 30 }}>Backpacking Trips</h2>
           <div className="product-grid">
             {products.longTrips.map((p, i) => <ProductCard key={i} p={p} />)}
           </div>
@@ -332,12 +329,9 @@ export default function HomePage() {
       <section id="blr-trips" className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>2N/3D | EX: BLR</span>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>
+          <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, marginTop: 8, marginBottom: 30 }}>
             2N/3D Weekend Group Trips From Bangalore – Friday Departures
           </h2>
-          <p style={{ fontSize: 14, color: "#666", maxWidth: 800, marginBottom: 30 }}>
-            Discover exciting weekend getaways from Bangalore with our 2 Nights / 3 Days group travel packages. Visit scenic destinations like Coorg, Chikmagalur, Gokarna, Dandeli, Ooty, and more.
-          </p>
           <div className="product-grid">
             {products.blrTrips.map((p, i) => <ProductCard key={i} p={p} />)}
           </div>
@@ -350,14 +344,12 @@ export default function HomePage() {
           <div className="dual-grid">
             <div style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Monsoon SPL</span>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600, marginTop: 8 }}>Monsoon Treks</h3>
-              <p style={{ fontSize: 14, color: "#666", marginTop: 8 }}>Escape into the Sahyadris this rainy season with our handpicked treks featuring misty forests, hidden waterfalls, ancient forts, and magical trails perfect for monsoon explorers.</p>
+              <h3 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "1.5rem", fontWeight: 700, marginTop: 8, marginBottom: 16 }}>Monsoon Treks</h3>
               <Link href="/category/trek" style={{ display: "inline-block", marginTop: 16, padding: "10px 24px", background: "#25accd", color: "#fff", borderRadius: 50, fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View Treks →</Link>
             </div>
             <div id="couple-trips" style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Couple SPL</span>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600, marginTop: 8 }}>Couple Tour Packages</h3>
-              <p style={{ fontSize: 14, color: "#666", marginTop: 8 }}>Perfect 2N/3D escapes for couples — cozy stays, beautiful destinations, and private experiences.</p>
+              <h3 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "1.5rem", fontWeight: 700, marginTop: 8, marginBottom: 16 }}>Couple Tour Packages</h3>
               <Link href="/category/couple" style={{ display: "inline-block", marginTop: 16, padding: "10px 24px", background: "#25accd", color: "#fff", borderRadius: 50, fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View Packages →</Link>
             </div>
           </div>
@@ -408,7 +400,7 @@ export default function HomePage() {
       <section id="reviews" className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Client Reviews</span>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 30 }}>What Our Travellers Say</h2>
+          <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, marginTop: 8, marginBottom: 30 }}>What Our Travellers Say</h2>
           <div className="three-col-grid">
             {products.reviews.map((r, i) => (
               <div key={i} style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
@@ -433,7 +425,7 @@ export default function HomePage() {
       <section className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Our Blog</span>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 30 }}>Travel Stories & Guides</h2>
+          <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, marginTop: 8, marginBottom: 30 }}>Travel Stories & Guides</h2>
           <div className="three-col-grid">
             {products.blogPosts.map((b, i) => (
               <div key={i} style={{ background: "#fff", borderRadius: 12, overflow: "hidden", border: "1px solid #e5e0db" }}>
@@ -456,8 +448,7 @@ export default function HomePage() {
       <section className="section-pad" style={{ padding: "60px 0", background: "linear-gradient(135deg, #25accd 0%, #187a90 100%)", textAlign: "center" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#e4a33c", letterSpacing: 1 }}>Honeymoon Special</span>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.5rem, 3vw, 2.5rem)", fontWeight: 600, marginTop: 10, color: "#fff" }}>Honeymoon Tour Packages</h2>
-          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", maxWidth: 600, margin: "10px auto 24px" }}>Start your new journey together with our exclusive honeymoon packages. Romantic getaways in Kashmir, Kerala, Manali & more.</p>
+          <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.5rem, 3vw, 2.5rem)", fontWeight: 700, marginTop: 10, marginBottom: 24, color: "#fff" }}>Honeymoon Tour Packages</h2>
           <Link href="/category/couple" style={{ display: "inline-block", padding: "12px 32px", background: "#e4a33c", color: "#000", borderRadius: 50, fontSize: 14, fontWeight: 600, textDecoration: "none" }}>Explore Honeymoon →</Link>
         </div>
       </section>
