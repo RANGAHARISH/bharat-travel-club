@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { ImageSlideshow } from "@/components/ui/image-slideshow";
 import type { Trip } from "@/types";
 
 interface TripCardProps {
@@ -11,23 +12,24 @@ export function TripCard({ trip }: TripCardProps) {
   const hasDiscount = trip.discounted_price && trip.discounted_price > trip.price;
   const emojis = [];
   const emoji = "";
+  const images = trip.gallery_images?.length > 0 ? trip.gallery_images : (trip.cover_image_url ? [trip.cover_image_url] : []);
 
   return (
-    <Link href={`/trips/${trip.slug}`} className="group block">
-      <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all group-hover:-translate-y-0.5">
+    <Link href={`/trips/${trip.slug}`} className="group block h-full">
+      <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all group-hover:-translate-y-0.5 h-full flex flex-col">
         {/* Image */}
-        <div className="relative aspect-[4/3] bg-gradient-to-br from-brand-red/10 to-blue-100">
-          {trip.cover_image_url ? (
-            <img src={trip.cover_image_url} alt={trip.title} className="w-full h-full object-cover" />
+        <div className="relative aspect-[4/3] bg-gradient-to-br from-brand-red/10 to-blue-100 overflow-hidden">
+          {images.length > 0 ? (
+            <ImageSlideshow images={images} alt={trip.title} />
           ) : (
             <div className="flex items-center justify-center h-full text-5xl opacity-60">{emoji}</div>
           )}
           {trip.is_featured && (
-            <span className="absolute top-2 left-2 bg-amber-500 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">
+            <span className="absolute top-2 left-2 z-10 bg-amber-500 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full shadow-sm">
               Featured
             </span>
           )}
-          <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
+          <span className="absolute bottom-2 right-2 z-10 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm shadow-sm">
             {trip.duration_days}D/{trip.duration_nights}N
           </span>
         </div>

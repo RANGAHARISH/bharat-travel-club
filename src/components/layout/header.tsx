@@ -24,7 +24,7 @@ export function Header() {
             alt="Bharath Travel Club"
             className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover"
           />
-          <span className="font-bold text-sm sm:text-base lg:text-lg text-[#1a1a1a] truncate max-w-[140px] sm:max-w-none">
+          <span className="font-bold text-base sm:text-lg lg:text-xl text-[#1a1a1a] leading-tight">
             Bharath Travel <span className="text-[#25accd]">Club</span>
           </span>
         </Link>

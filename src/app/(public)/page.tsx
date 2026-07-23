@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { ImageSlideshow } from "@/components/ui/image-slideshow";
 
 // ===== BRAND COLORS =====
 // Primary: #25accd (teal from logo)
@@ -86,15 +87,7 @@ function ProductCard({ p }: { p: any }) {
       <Link href={`/trips/${p.title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`} style={{ textDecoration: "none" }}>
         <div style={{ position: "relative", aspectRatio: "4/3", background: "#e8f4f8", overflow: "hidden" }}>
           
-          {hoverImages ? (
-            <div className="hover-slider-inner" style={{ display: "flex", width: `${hoverImages.length * 100}%`, height: "100%", willChange: "transform" }}>
-              {hoverImages.map((src: string, idx: number) => (
-                <img key={idx} src={src} alt={`${p.title} ${idx + 1}`} style={{ width: `${100 / hoverImages.length}%`, height: "100%", objectFit: "cover" }} loading="lazy" />
-              ))}
-            </div>
-          ) : (
-            <img src={imgUrl} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
-          )}
+          <ImageSlideshow images={hoverImages || [imgUrl]} alt={p.title} />
 
           {(p as any).badge && (
             <span style={{ position: "absolute", top: 10, left: 10, background: "#e4a33c", color: "#fff", fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 20 }}>
@@ -159,20 +152,6 @@ export default function HomePage() {
         @media (max-width: 480px) {
           .hero-headline { font-size: 1.65rem !important; }
           .hero-subtitle { font-size: 0.85rem !important; }
-        }
-        
-        @keyframes slideShowHover {
-          0%, 15% { transform: translateX(0); }
-          25%, 40% { transform: translateX(-25%); }
-          50%, 65% { transform: translateX(-50%); }
-          75%, 90% { transform: translateX(-75%); }
-          100% { transform: translateX(0); }
-        }
-        .group-hover-animate:hover .hover-slider-inner {
-          animation: slideShowHover 8s infinite ease-in-out;
-        }
-        .hover-slider-inner {
-          transition: transform 0.5s ease;
         }
       `}</style>
 
