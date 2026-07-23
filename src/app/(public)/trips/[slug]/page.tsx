@@ -7,7 +7,7 @@ import { ImageSlider } from "@/components/ui/image-slider";
 import { createServer } from "@/lib/supabase/server";
 
 // ===== TRIP DETAILS DATABASE (fallback when Supabase not connected) =====
-const tripDetails: Record<string, {
+export const tripDetails: Record<string, {
   title: string;
   tagline: string;
   price: number;

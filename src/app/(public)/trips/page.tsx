@@ -3,6 +3,7 @@ import { createServer } from "@/lib/supabase/server";
 import { TripCard } from "@/components/features/trip-card";
 import type { Trip } from "@/types";
 import type { Metadata } from "next";
+import { tripDetails } from "./[slug]/page";
 
 export const metadata: Metadata = {
   title: "All Trips",
@@ -23,7 +24,30 @@ async function getTrips() {
 }
 
 export default async function TripsPage() {
-  const trips = await getTrips();
+  const dbTrips = await getTrips();
+  let trips = dbTrips;
+
+  if (trips.length === 0) {
+    trips = Object.entries(tripDetails).map(([slug, details], idx) => {
+      const daysMatch = details.duration.match(/(\d+)\s*Days?/i) || details.duration.match(/(\d+)D/i) || [null, "3"];
+      const nightsMatch = details.duration.match(/(\d+)\s*Nights?/i) || details.duration.match(/(\d+)N/i) || [null, "2"];
+      
+      return {
+        id: `fallback-${idx}`,
+        slug,
+        title: details.title,
+        price: details.origPrice || details.price,
+        discounted_price: details.price,
+        duration_days: parseInt(daysMatch[1] as string) || 0,
+        duration_nights: parseInt(nightsMatch[1] as string) || 0,
+        is_featured: false,
+        status: 'published',
+        cover_image_url: details.image,
+        location: details.location,
+        category: null,
+      } as unknown as Trip;
+    });
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">

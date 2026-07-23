@@ -17,7 +17,11 @@ export function TripCard({ trip }: TripCardProps) {
       <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all group-hover:-translate-y-0.5">
         {/* Image */}
         <div className="relative aspect-[4/3] bg-gradient-to-br from-brand-red/10 to-blue-100">
-          <div className="flex items-center justify-center h-full text-5xl opacity-60">{emoji}</div>
+          {trip.cover_image_url ? (
+            <img src={trip.cover_image_url} alt={trip.title} className="w-full h-full object-cover" />
+          ) : (
+            <div className="flex items-center justify-center h-full text-5xl opacity-60">{emoji}</div>
+          )}
           {trip.is_featured && (
             <span className="absolute top-2 left-2 bg-amber-500 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">
               Featured
