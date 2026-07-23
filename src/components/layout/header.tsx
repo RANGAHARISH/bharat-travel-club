@@ -52,8 +52,8 @@ export function Header() {
               </Button>
             </Link>
             <Link href="/signup">
-              <Button size="sm" className="bg-[#25accd] hover:bg-[#1d8ca8] text-white">
-                Sign Up
+              <Button size="sm" className="bg-[#25accd] hover:bg-[#1d8ca8] text-white font-semibold shadow-md shadow-[#25accd]/20">
+                Create Account
               </Button>
             </Link>
           </div>
@@ -85,8 +85,8 @@ export function Header() {
               </Button>
             </Link>
             <Link href="/signup" className="flex-1" onClick={() => setOpen(false)}>
-              <Button size="sm" className="w-full bg-[#25accd] hover:bg-[#1d8ca8] text-white">
-                <UserPlus className="h-4 w-4 mr-1.5" /> Sign Up
+              <Button size="sm" className="w-full bg-[#25accd] hover:bg-[#1d8ca8] text-white font-semibold shadow-md shadow-[#25accd]/20">
+                <UserPlus className="h-4 w-4 mr-1.5" /> Create Account
               </Button>
             </Link>
           </div>
