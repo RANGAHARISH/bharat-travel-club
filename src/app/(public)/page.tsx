@@ -308,10 +308,6 @@ export default function HomePage() {
           <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, marginTop: 8, marginBottom: 8 }}>
             2N/3D Weekend Group Trips From Hyderabad – Weekly Friday Departures
           </h2>
-          <p style={{ fontSize: 14, color: "#666", maxWidth: 1000, marginBottom: 30, lineHeight: 1.6 }}>
-            Plan the perfect weekend escape with our 2 Nights / 3 Days group tour packages from Hyderabad. Discover top-rated destinations like Gokarna, Coorg, Ooty, Dandeli, Murudeshwar, and more.<br />
-            Our budget-friendly weekend trips are ideal for solo travelers, friends, and groups — every Friday departure guaranteed!
-          </p>
           <div className="product-grid">
             {products.hydWeekend.map((p, i) => <ProductCard key={i} p={p} />)}
           </div>
