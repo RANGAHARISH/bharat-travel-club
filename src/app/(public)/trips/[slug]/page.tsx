@@ -546,7 +546,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 700, margin: "0 0 12px" }}>Trip Highlights</h2>
             <div className="highlights-grid">
-              {trip.highlights.map((h, i) => (
+              {trip.highlights.map((h: string, i: number) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, color: "#555" }}>
                   <span style={{ color: "#33abcb", fontSize: 16 }}>✓</span> {h}
                 </div>
@@ -558,7 +558,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", fontWeight: 700, margin: "0 0 16px" }}>Detailed Itinerary</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              {trip.itinerary.map((day, i) => (
+              {trip.itinerary.map((day: any, i: number) => (
                 <div key={i} style={{ borderLeft: "3px solid #33abcb", paddingLeft: 16 }}>
                   <h3 style={{ fontSize: 16, fontWeight: 700, color: "#33abcb", margin: "0 0 4px", display: "flex", alignItems: "center", gap: 8 }}>
                     <span style={{ background: "#33abcb", color: "#fff", width: 28, height: 28, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>{i + 1}</span>
@@ -568,7 +568,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
                     {(() => {
                       const groups: { type: "bullet" | "text"; items: string[] }[] = [];
                       let current: { type: "bullet" | "text"; items: string[] } | null = null;
-                      day.details.forEach((line) => {
+                      day.details.forEach((line: string) => {
                         if (line === "") {
                           if (current) { groups.push(current); current = null; }
                         } else if (line.startsWith("  •") || line.startsWith("  –")) {
@@ -585,11 +585,11 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
                         }
                       });
                       if (current) groups.push(current);
-                      return groups.map((g, gi) => {
+                      return groups.map((g: any, gi: number) => {
                         if (g.type === "text") return <p key={gi} style={{ margin: "0 0 2px 0", fontSize: 13.5, color: "#444" }}>{g.items[0]}</p>;
                         return (
                           <ul key={gi} style={{ margin: "4px 0", padding: 0, listStyle: "none" }}>
-                            {g.items.map((item, li) => (
+                            {g.items.map((item: string, li: number) => (
                               <li key={li} style={{ display: "flex", alignItems: "baseline", gap: 8, fontSize: 13.5, color: "#555", padding: "1px 0", lineHeight: 1.5 }}>
                                 <span style={{ color: "#33abcb", flexShrink: 0 }}>•</span>
                                 <span>{item}</span>
@@ -610,7 +610,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
             <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#16a34a" }}>Inclusions</h2>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-                {trip.inclusions.map((item, i) => (
+                {trip.inclusions.map((item: string, i: number) => (
                   <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><span style={{ color: "#16a34a", flexShrink: 0 }}>✓</span> {item}</li>
                 ))}
               </ul>
@@ -618,7 +618,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
             <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#dc2626" }}>Exclusions</h2>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-                {trip.exclusions.map((item, i) => (
+                {trip.exclusions.map((item: string, i: number) => (
                   <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><span style={{ color: "#dc2626", flexShrink: 0 }}>✕</span> {item}</li>
                 ))}
               </ul>
@@ -629,7 +629,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#e4a33c" }}>Important Notes</h2>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-              {trip.notes.map((note, i) => (
+              {trip.notes.map((note: string, i: number) => (
                 <li key={i} style={{ fontSize: 13, color: "#555", lineHeight: 1.5, display: "flex", gap: 8 }}><span style={{ color: "#e4a33c", flexShrink: 0 }}>•</span> {note}</li>
               ))}
             </ul>
@@ -639,7 +639,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
           <div style={{ background: "#fff", borderRadius: 12, padding: 24, border: "1px solid #e5e0db" }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, margin: "0 0 12px", color: "#dc2626" }}>Cancellation Policy</h2>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-              {trip.cancelPolicy.map((policy, i) => (
+              {trip.cancelPolicy.map((policy: string, i: number) => (
                 <li key={i} style={{ fontSize: 13.5, color: "#555", display: "flex", gap: 8 }}><span style={{ color: "#dc2626" }}>•</span> {policy}</li>
               ))}
             </ul>
