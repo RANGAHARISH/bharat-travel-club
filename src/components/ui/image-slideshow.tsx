@@ -46,11 +46,11 @@ export function ImageSlideshow({ images, alt }: { images: string[], alt: string 
       onMouseLeave={() => { if (window.matchMedia('(min-width: 769px)').matches) { setIsPlaying(false); setCurrentIndex(0); } }}
     >
       <div 
-        className="flex transition-transform duration-500 ease-in-out h-full"
-        style={{ transform: `translateX(-${currentIndex * 100}%)`, width: `${images.length * 100}%` }}
+        className="flex transition-transform duration-500 ease-in-out h-full w-full"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((src, i) => (
-          <div key={i} style={{ width: `${100 / images.length}%` }} className="h-full shrink-0">
+          <div key={i} className="w-full h-full shrink-0">
             <img src={src} alt={`${alt} - Image ${i + 1}`} className="w-full h-full object-cover" />
           </div>
         ))}

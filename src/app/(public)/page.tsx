@@ -143,7 +143,6 @@ export default function HomePage() {
         @media (max-width: 640px) {
           .hero-section { min-height: 90dvh !important; }
           .section-pad { padding: 40px 0 !important; }
-          .hero-headline br { display: none; }
           .quick-info-wrap { flex-direction: column !important; gap: 8px !important; }
         }
         @media (min-width: 641px) and (max-width: 1024px) {
@@ -174,15 +173,14 @@ export default function HomePage() {
           </span>
 
           {/* Main headline */}
-          <h1 className="hero-headline" style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, color: "#fff", lineHeight: 1.2, margin: "0 auto", maxWidth: 1000 }}>
-            <span style={{ whiteSpace: "nowrap" }}>Explore India's <span style={{ color: "#e4a33c" }}>Hidden Gems</span></span><br />
-            With Fellow Travellers
+          <h1 className="hero-headline" style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(2rem, 8vw, 3.5rem)", fontWeight: 700, color: "#fff", lineHeight: 1.3, margin: "0 auto", maxWidth: 1000 }}>
+            Explore India's <span style={{ color: "#e4a33c" }}>Hidden Gems</span> <br className="hidden sm:block" /> With Fellow Travellers
           </h1>
-          <div style={{ margin: "14px auto 0", maxWidth: 600, textAlign: "left", display: "inline-block" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: "clamp(0.9rem, 1.4vw, 1rem)", color: "rgba(255,255,255,0.8)", lineHeight: 1.5 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}><span style={{ color: "#e4a33c", fontSize: 10 }}>✦</span> Weekend trips, treks, camping & couple packages</div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}><span style={{ color: "#e4a33c", fontSize: 10 }}>✦</span> From Hyderabad & Bangalore</div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}><span style={{ color: "#e4a33c", fontSize: 10 }}>✦</span> Budget-friendly, community-driven, departures every week</div>
+          <div style={{ margin: "24px auto 0", maxWidth: 600, textAlign: "left", display: "inline-block" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, fontSize: "clamp(0.95rem, 4vw, 1.1rem)", color: "rgba(255,255,255,0.9)", lineHeight: 1.5 }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}><span style={{ color: "#e4a33c", fontSize: 16, marginTop: 2 }}>✦</span> <span>Weekend trips, treks, camping & couple packages</span></div>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}><span style={{ color: "#e4a33c", fontSize: 16, marginTop: 2 }}>✦</span> <span>From Hyderabad & Bangalore</span></div>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}><span style={{ color: "#e4a33c", fontSize: 16, marginTop: 2 }}>✦</span> <span>Budget-friendly, community-driven, departures every week</span></div>
             </div>
           </div>
 
