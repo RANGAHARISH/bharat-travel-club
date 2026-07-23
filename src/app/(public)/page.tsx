@@ -305,11 +305,11 @@ export default function HomePage() {
       <section id="weekend-trips" className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>2N/3D | EX:HYD</span>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>
+          <h2 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700, marginTop: 8, marginBottom: 8 }}>
             2N/3D Weekend Group Trips From Hyderabad – Weekly Friday Departures
           </h2>
-          <p style={{ fontSize: 14, color: "#666", maxWidth: 800, marginBottom: 30 }}>
-            Plan the perfect weekend escape with our 2 Nights / 3 Days group tour packages from Hyderabad. Discover top-rated destinations like Gokarna, Coorg, Ooty, Dandeli, Murudeshwar, and more. Our budget-friendly weekend trips are ideal for solo travelers, friends, and groups — every Friday departure guaranteed!
+          <p style={{ fontSize: 14, color: "#666", maxWidth: 800, marginBottom: 30, lineHeight: 1.6 }}>
+            Plan the perfect weekend escape with our budget-friendly 2N/3D group tours from Hyderabad to top destinations like Gokarna, Coorg, and Ooty. Ideal for solo travelers, friends, and groups — with guaranteed weekly Friday departures!
           </p>
           <div className="product-grid">
             {products.hydWeekend.map((p, i) => <ProductCard key={i} p={p} />)}
