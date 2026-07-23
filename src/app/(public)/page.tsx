@@ -69,6 +69,14 @@ const products = {
   ],
 };
 
+const allTrips = [
+  ...products.hydWeekend,
+  ...products.longTrips,
+  ...products.blrTrips,
+  ...products.coupleTrips,
+  ...products.campingTrips
+];
+
 function ProductCard({ p }: { p: any }) {
   const imgUrl = p.coverImg || imageUrls[p.img] || imageUrls["🏔️"];
   const hoverImages = p.hoverImages;
@@ -120,6 +128,19 @@ function ProductCard({ p }: { p: any }) {
 
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchDest, setSearchDest] = useState("Destination");
+  const [searchDur, setSearchDur] = useState("Duration");
+  const [activeSearch, setActiveSearch] = useState<{dest: string, dur: string} | null>(null);
+
+  const handleSearch = (dest?: string, dur?: string) => {
+    setActiveSearch({ 
+      dest: dest && typeof dest === 'string' ? dest : searchDest, 
+      dur: dur && typeof dur === 'string' ? dur : searchDur 
+    });
+    setTimeout(() => {
+      document.getElementById("search-results")?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
 
   return (
     <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", background: "#fff", color: "#1a1a1a", lineHeight: 1.6, overflowX: "hidden" }}>
@@ -188,7 +209,7 @@ export default function HomePage() {
 
           {/* Search/filter bar */}
           <div className="hero-search-bar" style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", marginTop: 20, background: "rgba(255,255,255,0.12)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 16, padding: "16px 20px", maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
-            <select style={{ flex: 1, minWidth: 140, padding: "12px 16px", borderRadius: 10, border: "none", background: "rgba(255,255,255,0.9)", fontSize: 14, fontWeight: 500, color: "#333", outline: "none" }}>
+            <select value={searchDest} onChange={(e) => setSearchDest(e.target.value)} style={{ flex: 1, minWidth: 140, padding: "12px 16px", borderRadius: 10, border: "none", background: "rgba(255,255,255,0.9)", fontSize: 14, fontWeight: 500, color: "#333", outline: "none" }}>
               <option>Destination</option>
               <option>Gokarna</option>
               <option>Coorg</option>
@@ -198,15 +219,15 @@ export default function HomePage() {
               <option>Manali</option>
               <option>Goa</option>
             </select>
-            <select style={{ flex: 1, minWidth: 120, padding: "12px 16px", borderRadius: 10, border: "none", background: "rgba(255,255,255,0.9)", fontSize: 14, fontWeight: 500, color: "#333", outline: "none" }}>
+            <select value={searchDur} onChange={(e) => setSearchDur(e.target.value)} style={{ flex: 1, minWidth: 120, padding: "12px 16px", borderRadius: 10, border: "none", background: "rgba(255,255,255,0.9)", fontSize: 14, fontWeight: 500, color: "#333", outline: "none" }}>
               <option>Duration</option>
               <option>Weekend (2-3 days)</option>
               <option>Extended (4-5 days)</option>
               <option>Long Trip (6+ days)</option>
             </select>
-            <Link href="/trips" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 28px", background: "#e4a33c", color: "#000", borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: "none", border: "none", cursor: "pointer", whiteSpace: "nowrap" }}>
+            <button onClick={() => handleSearch()} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 28px", background: "#e4a33c", color: "#000", borderRadius: 10, fontSize: 14, fontWeight: 700, border: "none", cursor: "pointer", whiteSpace: "nowrap" }}>
               Search →
-            </Link>
+            </button>
           </div>
 
           {/* Quick destination chips */}
@@ -221,17 +242,64 @@ export default function HomePage() {
               { name: "Spiti", icon: "peak" },
               { name: "Meghalaya", icon: "rain" },
             ].map((d) => (
-              <Link
+              <button
                 key={d.name}
-                href={`/trips`}
-                style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 50, color: "#fff", fontSize: 13, fontWeight: 500, textDecoration: "none", transition: "all 0.2s", backdropFilter: "blur(4px)" }}
+                onClick={() => {
+                  setSearchDest(d.name);
+                  handleSearch(d.name, "Duration");
+                }}
+                style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 50, color: "#fff", fontSize: 13, fontWeight: 500, textDecoration: "none", transition: "all 0.2s", backdropFilter: "blur(4px)", cursor: "pointer" }}
               >
                 {d.name}
-              </Link>
+              </button>
             ))}
           </div>
         </div>
       </section>
+
+      {/* ======== SEARCH RESULTS ======== */}
+      {activeSearch && (
+        <section id="search-results" className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 30 }}>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, margin: 0 }}>
+                Search Results {activeSearch.dest !== "Destination" ? `for ${activeSearch.dest}` : ""}
+              </h2>
+              <button onClick={() => setActiveSearch(null)} style={{ background: "none", border: "none", color: "#666", cursor: "pointer", textDecoration: "underline", fontSize: 14 }}>
+                Clear Search
+              </button>
+            </div>
+            
+            {(() => {
+              const results = allTrips.filter(t => {
+                let match = true;
+                if (activeSearch.dest !== "Destination") {
+                  match = match && (t.title.toLowerCase().includes(activeSearch.dest.toLowerCase()) || t.loc.toLowerCase().includes(activeSearch.dest.toLowerCase()));
+                }
+                if (activeSearch.dur !== "Duration") {
+                  const daysMatch = t.dur.match(/(\d+)\s+Days/i);
+                  const days = daysMatch ? parseInt(daysMatch[1]) : 0;
+                  if (activeSearch.dur.includes("2-3")) {
+                    if (days > 3) match = false;
+                  } else if (activeSearch.dur.includes("4-5")) {
+                    if (days < 4 || days > 5) match = false;
+                  } else if (activeSearch.dur.includes("6+")) {
+                    if (days < 6) match = false;
+                  }
+                }
+                return match;
+              });
+
+              if (results.length === 0) return <p style={{ color: "#666", fontSize: 15 }}>No trips found matching your criteria. Try adjusting your search.</p>;
+              return (
+                <div className="product-grid">
+                  {results.map((p, i) => <ProductCard key={i} p={p} />)}
+                </div>
+              )
+            })()}
+          </div>
+        </section>
+      )}
 
       {/* ======== 2N/3D | EX:HYD ======== */}
       <section id="weekend-trips" className="section-pad" style={{ padding: "60px 0" }}>
