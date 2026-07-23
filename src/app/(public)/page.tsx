@@ -195,7 +195,7 @@ export default function HomePage() {
           </span>
 
           {/* Main headline */}
-          <h1 className="hero-headline" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, color: "#fff", lineHeight: 1.2, margin: "0 auto", maxWidth: 750 }}>
+          <h1 className="hero-headline" style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 700, color: "#fff", lineHeight: 1.2, margin: "0 auto", maxWidth: 750 }}>
             Explore India's <span style={{ color: "#e4a33c" }}>Hidden Gems</span><br />
             With Fellow Travellers
           </h1>
