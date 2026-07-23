@@ -339,7 +339,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== MONSOON + COUPLE SPLIT ======== */}
-      <section className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
+      <section id="couple-trips" className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2", scrollMarginTop: "80px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <div className="dual-grid">
             <div style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
@@ -347,7 +347,7 @@ export default function HomePage() {
               <h3 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "1.5rem", fontWeight: 700, marginTop: 8, marginBottom: 16 }}>Monsoon Treks</h3>
               <Link href="/category/trek" style={{ display: "inline-block", marginTop: 16, padding: "10px 24px", background: "#25accd", color: "#fff", borderRadius: 50, fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View Treks →</Link>
             </div>
-            <div id="couple-trips" style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
+            <div style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Couple SPL</span>
               <h3 style={{ fontFamily: "'HK Grotesk', sans-serif", fontSize: "1.5rem", fontWeight: 700, marginTop: 8, marginBottom: 16 }}>Couple Tour Packages</h3>
               <Link href="/category/couple" style={{ display: "inline-block", marginTop: 16, padding: "10px 24px", background: "#25accd", color: "#fff", borderRadius: 50, fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View Packages →</Link>
