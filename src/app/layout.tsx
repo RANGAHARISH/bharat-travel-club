@@ -34,8 +34,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
-      <body className="font-sans">
+    <html lang="en" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
+      <body className="font-sans" suppressHydrationWarning>
         <ToastProvider>
           <div className="flex min-h-screen flex-col">
             <Header />

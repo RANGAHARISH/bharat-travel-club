@@ -7,10 +7,9 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/trips", label: "Weekend Group Trips" },
-  { href: "/category/couple", label: "Couple Tour Packages" },
-  { href: "/category/camp", label: "Camping" },
-  { href: "/category/trek", label: "Honeymoon Tour Packages" },
+  { href: "/#weekend-trips", label: "Weekend Group Trips" },
+  { href: "/#couple-trips", label: "Couple Tour Packages" },
+  { href: "/#long-trips", label: "Honeymoon Tour Packages" },
 ];
 
 export function Header() {

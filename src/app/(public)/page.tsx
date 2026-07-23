@@ -28,10 +28,10 @@ const imageUrls: Record<string, string> = {
 // ===== EXACT PRODUCT DATA (matches weekendyaari.in) =====
 const products = {
   hydWeekend: [
-    { img: "🌊", label: "3 days", title: "Gokarna Weekend Group Tour", loc: "Gokarna, Karnataka", dur: "3 Days / 2 Nights", price: "₹4,999", orig: "₹6,500" },
-    { img: "🏔️", label: "3 days", title: "Coorg Weekend Group Tour from Hyderabad", loc: "Coorg, Karnataka", dur: "3 Days / 2 Nights", price: "₹5,499", orig: "₹7,500" },
-    { img: "🌄", label: "3 days", title: "Ooty Weekend Group Tour Package", loc: "Ooty, Tamil Nadu", dur: "3 Days / 2 Nights", price: "₹5,999", orig: "₹8,000" },
-    { img: "🌲", label: "3 days", title: "Dandeli Weekend Group Tour", loc: "Dandeli, Karnataka", dur: "3 Days / 2 Nights", price: "₹4,499", orig: "₹6,000" },
+    { img: "🌊", label: "3 days", title: "Gokarna Weekend Group Tour", loc: "Gokarna, Karnataka", dur: "3 Days / 2 Nights", price: "₹4,999", orig: "₹6,500", coverImg: "/gokarna1.jpg", hoverImages: ["/gokarna1.jpg", "/gokarna2.avif", "/gokarna3.jpg", "/gokarna4.jpg"] },
+    { img: "🏔️", label: "3 days", title: "Coorg Weekend Group Tour from Hyderabad", loc: "Coorg, Karnataka", dur: "3 Days / 2 Nights", price: "₹5,499", orig: "₹7,500", coverImg: "/coorg1.jpg", hoverImages: ["/coorg1.jpg", "/coorg2.jpg", "/coorg3.jpg", "/coorg4.jpg"] },
+    { img: "🌄", label: "3 days", title: "Ooty Weekend Group Tour Package", loc: "Ooty, Tamil Nadu", dur: "3 Days / 2 Nights", price: "₹7,999", orig: "₹7,999", coverImg: "/ooty1.avif", hoverImages: ["/ooty1.avif", "/ooty2.avif", "/ooty3.avif", "/ooty4.avif"] },
+    { img: "🌲", label: "3 days", title: "Dandeli Weekend Group Tour", loc: "Dandeli, Karnataka", dur: "3 Days / 2 Nights", price: "₹4,499", orig: "₹6,000", coverImg: "/dandeli1.jpg", hoverImages: ["/dandeli1.jpg", "/dandeli2.jpg", "/dandeli3.jpg", "/dandeli4.jpg"] },
   ],
   longTrips: [
     { img: "🏛️", label: "4 days", title: "Golden Triangle Tour Package – Agra, Jaipur & Delhi", loc: "Agra, Jaipur & Delhi", dur: "4 Days / 3 Nights", price: "₹9,999", orig: "₹12,999", badge: "Bestseller" },
@@ -69,13 +69,25 @@ const products = {
   ],
 };
 
-function ProductCard({ p }: { p: typeof products.hydWeekend[0] }) {
-  const imgUrl = imageUrls[p.img] || imageUrls["🏔️"];
+function ProductCard({ p }: { p: any }) {
+  const imgUrl = p.coverImg || imageUrls[p.img] || imageUrls["🏔️"];
+  const hoverImages = p.hoverImages;
+  
   return (
-    <div className="product-card" style={{ background: "#fff", borderRadius: 12, overflow: "hidden", border: "1px solid #f0f0f0", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+    <div className="product-card group-hover-animate" style={{ background: "#fff", borderRadius: 12, overflow: "hidden", border: "1px solid #f0f0f0", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
       <Link href={`/trips/${p.title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`} style={{ textDecoration: "none" }}>
         <div style={{ position: "relative", aspectRatio: "4/3", background: "#e8f4f8", overflow: "hidden" }}>
-          <img src={imgUrl} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
+          
+          {hoverImages ? (
+            <div className="hover-slider-inner" style={{ display: "flex", width: `${hoverImages.length * 100}%`, height: "100%", willChange: "transform" }}>
+              {hoverImages.map((src: string, idx: number) => (
+                <img key={idx} src={src} alt={`${p.title} ${idx + 1}`} style={{ width: `${100 / hoverImages.length}%`, height: "100%", objectFit: "cover" }} loading="lazy" />
+              ))}
+            </div>
+          ) : (
+            <img src={imgUrl} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
+          )}
+
           {(p as any).badge && (
             <span style={{ position: "absolute", top: 10, left: 10, background: "#e4a33c", color: "#fff", fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 20 }}>
               {(p as any).badge}
@@ -126,6 +138,20 @@ export default function HomePage() {
         @media (max-width: 480px) {
           .hero-headline { font-size: 1.65rem !important; }
           .hero-subtitle { font-size: 0.85rem !important; }
+        }
+        
+        @keyframes slideShowHover {
+          0%, 15% { transform: translateX(0); }
+          25%, 40% { transform: translateX(-25%); }
+          50%, 65% { transform: translateX(-50%); }
+          75%, 90% { transform: translateX(-75%); }
+          100% { transform: translateX(0); }
+        }
+        .group-hover-animate:hover .hover-slider-inner {
+          animation: slideShowHover 8s infinite ease-in-out;
+        }
+        .hover-slider-inner {
+          transition: transform 0.5s ease;
         }
       `}</style>
 
@@ -208,7 +234,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== 2N/3D | EX:HYD ======== */}
-      <section className="section-pad" style={{ padding: "60px 0" }}>
+      <section id="weekend-trips" className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>2N/3D | EX:HYD</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>
@@ -224,7 +250,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== LONG TRIPS ======== */}
-      <section className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
+      <section id="long-trips" className="section-pad" style={{ padding: "60px 0", background: "#f8f5f2" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>LONG TRIPS</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>Backpacking Trips</h2>
@@ -238,7 +264,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== 2N/3D | EX: BLR ======== */}
-      <section className="section-pad" style={{ padding: "60px 0" }}>
+      <section id="blr-trips" className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>2N/3D | EX: BLR</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8 }}>
@@ -263,7 +289,7 @@ export default function HomePage() {
               <p style={{ fontSize: 14, color: "#666", marginTop: 8 }}>Escape into the Sahyadris this rainy season with our handpicked treks featuring misty forests, hidden waterfalls, ancient forts, and magical trails perfect for monsoon explorers.</p>
               <Link href="/category/trek" style={{ display: "inline-block", marginTop: 16, padding: "10px 24px", background: "#25accd", color: "#fff", borderRadius: 50, fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View Treks →</Link>
             </div>
-            <div style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
+            <div id="couple-trips" style={{ background: "#fff", borderRadius: 12, padding: 32, border: "1px solid #e5e0db" }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Couple SPL</span>
               <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 600, marginTop: 8 }}>Couple Tour Packages</h3>
               <p style={{ fontSize: 14, color: "#666", marginTop: 8 }}>Perfect 2N/3D escapes for couples — cozy stays, beautiful destinations, and private experiences.</p>
@@ -278,17 +304,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ======== CAMPING ======== */}
-      <section className="section-pad" style={{ padding: "60px 0", background: "linear-gradient(135deg, #000000 0%, #1a1515 50%, #1d3d45 100%)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
-          <span style={{ fontSize: 11, fontWeight: 700, color: "#e4a33c", letterSpacing: 1 }}>Camping Special</span>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 8, color: "#fff" }}>Weekend Camping</h2>
-          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", maxWidth: 800, marginBottom: 30 }}>Camp under the stars with our handpicked camping experiences near Hyderabad & Bangalore.</p>
-          <div className="product-grid">
-            {products.campingTrips.map((p, i) => <ProductCard key={i} p={p} />)}
-          </div>
-        </div>
-      </section>
+
 
       {/* ======== FEATURES BAR ======== */}
       <section style={{ padding: "40px 0", borderTop: "1px solid #e5e0db", borderBottom: "1px solid #e5e0db" }}>
@@ -324,7 +340,7 @@ export default function HomePage() {
       </section>
 
       {/* ======== REVIEWS ======== */}
-      <section className="section-pad" style={{ padding: "60px 0" }}>
+      <section id="reviews" className="section-pad" style={{ padding: "60px 0" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "#25accd", letterSpacing: 1 }}>Client Reviews</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 600, marginTop: 8, marginBottom: 30 }}>What Our Travellers Say</h2>

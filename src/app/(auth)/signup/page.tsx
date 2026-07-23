@@ -24,18 +24,27 @@ export default function SignupPage() {
     }
 
     const supabase = createClient();
-    const { error: err } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-      options: { data: { full_name: form.fullName } },
-    });
+    try {
+      const { error: err } = await supabase.auth.signUp({
+        email: form.email,
+        password: form.password,
+        options: { data: { full_name: form.fullName } },
+      });
 
-    if (err) {
-      setError(err.message);
+      if (err) {
+        setError(err.message);
+        setLoading(false);
+      } else {
+        router.push("/account?welcome=true");
+        router.refresh();
+      }
+    } catch (error: any) {
+      if (error.message === "Failed to fetch") {
+        setError("Network error: Please make sure your Supabase URL and Key in .env.local are correct.");
+      } else {
+        setError("An unexpected error occurred.");
+      }
       setLoading(false);
-    } else {
-      router.push("/account?welcome=true");
-      router.refresh();
     }
   }
 
@@ -52,7 +61,7 @@ export default function SignupPage() {
         <Input id="email" label="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
         <Input id="password" label="Password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required placeholder="Min 8 characters" />
         {error && <p className="text-sm text-brand-coral">{error}</p>}
-        <Button type="submit" loading={loading} className="w-full" size="lg">Create Account</Button>
+        <Button type="submit" loading={loading} className="w-full bg-[#25accd] hover:bg-[#1d8ca8] text-white" size="lg">Create Account</Button>
       </form>
 
       <p className="text-center text-sm text-brand-ink/60">
